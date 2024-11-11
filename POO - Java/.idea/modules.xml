@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/POO - Java.iml" filepath="$PROJECT_DIR$/POO - Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/POO - Java/AreaTriangulo/AreaTriangulo.iml" filepath="$PROJECT_DIR$/POO - Java/AreaTriangulo/AreaTriangulo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/POO - Java/Banco/Banco.iml" filepath="$PROJECT_DIR$/POO - Java/Banco/Banco.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/POO - Java.iml" filepath="$PROJECT_DIR$/.idea/POO - Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/POO - Java/helloworld/helloworld.iml" filepath="$PROJECT_DIR$/POO - Java/helloworld/helloworld.iml" />
     </modules>
   </component>
 </project>
