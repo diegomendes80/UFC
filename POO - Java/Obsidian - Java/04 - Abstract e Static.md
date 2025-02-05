@@ -48,7 +48,7 @@
 
 ### Interface
 Uma interface é semelhante à uma classe abstrata. A principal diferenças
-é que podemos "herdar" mais de uma interface, diferente da classe. Além disso, uma interface podem ter **métodos estáticos**, **métodos padrão (`default`)**, e **métodos abstratos**. Todos os atributos de uma interface são statics e finals.
+é que podemos "herdar" mais de uma interface, diferente da classe. Além disso, uma interface só pode ter métodos abstratos e constantes. Todos os atributos de uma interface são statics e finals.
 
 `public interface Classificação{
 	`public void classificar();`
