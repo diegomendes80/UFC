@@ -4,5 +4,5 @@ module com.example.projeto_finalpoo {
 
 
     opens com.example.projeto_finalpoo to javafx.fxml;
-    exports com.example.projeto_finalpoo;
+    exports com.example.projeto_finalpoo to javafx.graphics;
 }

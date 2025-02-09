@@ -1,4 +1,4 @@
-package project.model;
+package model;
 
 public class Filme extends Midia {
     private int duracaoMinutos;
