@@ -1,5 +1,6 @@
 package com.example.projeto_finalpoo.view;
 
+import com.example.projeto_finalpoo.model.Filme;
 import com.example.projeto_finalpoo.service.API;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import com.example.projeto_finalpoo.model.Midia;
 
 public class TelaPrincipal {
 
@@ -34,27 +36,36 @@ public class TelaPrincipal {
 
     public void initialize() {
 
-
+        //[nome, ano, genero, urlcapa, diretor, duracao]
         // Criar os VBoxes para os filmes
-        VBox filmeBox1 = criarElementoFilme(filmeExposicao1[0], filmeExposicao1[2], filmeExposicao1[1], filmeExposicao1[5], filmeExposicao1[4]);
-        VBox filmeBox2 = criarElementoFilme(filmeExposicao2[0], filmeExposicao2[2], filmeExposicao2[1], filmeExposicao2[5], filmeExposicao2[4]);
-        VBox filmeBox3 = criarElementoFilme(filmeExposicao3[0], filmeExposicao3[2], filmeExposicao3[1], filmeExposicao3[5], filmeExposicao3[4]);
+        Filme filme1 = new Filme(filmeExposicao1[0], filmeExposicao1[2], filmeExposicao1[1], filmeExposicao1[5], filmeExposicao1[4]);
+        Filme filme2 = new Filme(filmeExposicao2[0], filmeExposicao2[2], filmeExposicao2[1], filmeExposicao2[5], filmeExposicao2[4]);
+        Filme filme3 = new Filme(filmeExposicao3[0], filmeExposicao3[2], filmeExposicao3[1], filmeExposicao3[5], filmeExposicao3[4]);
+        Filme filme4 = new Filme(filmeExposicao4[0], filmeExposicao4[2], filmeExposicao4[1], filmeExposicao4[5], filmeExposicao4[4]);
+        VBox filmeBox1 = criarElementoFilme(filme1, filmeExposicao1[3]);
+        VBox filmeBox2 = criarElementoFilme(filme2 , filmeExposicao2[3]);
+        VBox filmeBox3 = criarElementoFilme(filme3, filmeExposicao3[3]);
+        VBox filmeBox4 = criarElementoFilme(filme3, filmeExposicao4[3]);
 
         // Adiciona os VBoxes ao containerDeExposicao
-        containerDeExposicao1.getChildren().addAll(filmeBox1, filmeBox2, filmeBox3);
+        containerDeExposicao1.getChildren().addAll(filmeBox1, filmeBox2, filmeBox3, filmeBox4);
 
 
     }
 
 
     // Método para criar o elemento VBox de exibição do filme
-    private VBox criarElementoFilme(String nomeFilme, String anoLancamento, String genero, String nota, String urlCapa) {
+    private VBox criarElementoFilme(Midia midia, String urlCapa) {
+        String nota = Double.toString(midia.getMediaNotas()); //converto a nota para string
+        String nomeMidia = midia.getTitulo();
+        String genero = midia.getGenero();
+        String anoLancamento = midia.getAnoLancamento();
         // Criação do VBox principal
         VBox vbox = new VBox();
         vbox.setMaxWidth(Double.MAX_VALUE);
         vbox.setPrefHeight(310.0);
         vbox.setPrefWidth(276.0);
-        vbox.setStyle("-fx-background-image: url('" + urlCapa + "'); -fx-background-radius: 15px;");
+        vbox.setStyle("-fx-background-image: url('" + urlCapa + "'); -fx-background-radius: 15px; -fx-background-size: 100% 100%;");
 
         // Criação do HBox para a nota e a estrela
         HBox hbox = new HBox();
@@ -91,7 +102,7 @@ public class TelaPrincipal {
 
         // Criação da VBox interna com o nome e ano/gênero do filme
         VBox textBox = new VBox();
-        textBox.getChildren().add(new Label(nomeFilme)); // Nome do filme
+        textBox.getChildren().add(new Label(nomeMidia)); // Nome do filme
         textBox.getChildren().add(new Label(genero + " - " + anoLancamento)); // Gênero e ano
         vbox.getChildren().add(textBox);
 

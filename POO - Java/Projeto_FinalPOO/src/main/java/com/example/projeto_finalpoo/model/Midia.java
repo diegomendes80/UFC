@@ -1,13 +1,14 @@
 package com.example.projeto_finalpoo.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Midia {
     private String titulo;
     private String genero;
     private String anoLancamento;
-    List<Avaliacao> avaliacoes;
+    List<Avaliacao> avaliacoes = new ArrayList<>();
 
     public Midia(String titulo, String genero, String anoLancamento) {
         this.titulo = titulo;
@@ -27,8 +28,17 @@ public abstract class Midia {
         return anoLancamento;
     }
 
-    public double getMediaNotas(List<Double> notas){
+    public double getMediaNotas(){
+        List<Double> notas = new ArrayList<>();
+
+        if(avaliacoes.size() == 0) return 0;
+
+        for(int i=0; i < avaliacoes.size(); i++){
+            notas.add(avaliacoes.get(i).getNota());
+        }
+
         int somaNotas = 0;
+
         for(int i=0; i<notas.size(); i++){
             somaNotas += notas.get(i);
         }
