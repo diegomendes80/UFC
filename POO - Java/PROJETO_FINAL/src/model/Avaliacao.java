@@ -1,5 +1,7 @@
 package model;
 
+
+
 public class Avaliacao {
     private String usuario;
     private double nota;

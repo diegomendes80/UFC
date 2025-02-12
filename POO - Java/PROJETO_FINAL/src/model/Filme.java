@@ -1,17 +1,19 @@
 package model;
 
+
+
 public class Filme extends Midia {
-    private int duracaoMinutos;
+    private String duracaoMinutos;
     private String diretor;
 
 
-    public Filme(String titulo, String genero, int anoLancamento, int duracaoMinutos, String diretor) {
+    public Filme(String titulo, String genero, String anoLancamento, String duracaoMinutos, String diretor) {
         super(titulo, genero, anoLancamento);
         this.duracaoMinutos = duracaoMinutos;
         this.diretor = diretor;
     }
 
-    public int getDuracaoMinutos() {
+    public String getDuracaoMinutos() {
         return duracaoMinutos;
     }
 
@@ -23,7 +25,7 @@ public class Filme extends Midia {
     public void exibirDetalhes(){
         System.out.println("Filme: " + this.getTitulo());
         System.out.println("Gênero: " + this.getGenero());
-        System.out.println("Duração: " + this.getDuracaoMinutos() + "min");
+        System.out.println("Duração: " + this.getDuracaoMinutos());
         System.out.println("Diretor: " + this.getDiretor());
         System.out.println("Ano Lançamento: " + this.getAnoLancamento());
     }

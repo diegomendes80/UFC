@@ -1,12 +1,13 @@
 package model;
 
+
 import java.util.List;
 
 public class Serie extends Midia{
     private int qtdTemporadas;
     List<String> showrunners;
 
-    public Serie(String titulo, String genero, int anoLancamento, int qtdTemporadas, List<String> showrunners) {
+    public Serie(String titulo, String genero, String anoLancamento, int qtdTemporadas, List<String> showrunners) {
         super(titulo, genero, anoLancamento);
         this.qtdTemporadas = qtdTemporadas;
         this.showrunners = showrunners;

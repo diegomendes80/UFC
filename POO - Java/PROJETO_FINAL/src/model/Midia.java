@@ -1,14 +1,15 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Midia {
     private String titulo;
     private String genero;
-    private int anoLancamento;
-    List<Avaliacao> avaliacoes;
+    private String anoLancamento;
+    List<Avaliacao> avaliacoes = new ArrayList<>();
 
-    public Midia(String titulo, String genero, int anoLancamento) {
+    public Midia(String titulo, String genero, String anoLancamento) {
         this.titulo = titulo;
         this.genero = genero;
         this.anoLancamento = anoLancamento;
@@ -22,12 +23,21 @@ public abstract class Midia {
         return genero;
     }
 
-    public int getAnoLancamento() {
+    public String getAnoLancamento() {
         return anoLancamento;
     }
 
-    public double getMediaNotas(List<Double> notas){
+    public double getMediaNotas(){
+        List<Double> notas = new ArrayList<>();
+
+        if(avaliacoes.size() == 0) return 0;
+
+        for(int i=0; i < avaliacoes.size(); i++){
+            notas.add(avaliacoes.get(i).getNota());
+        }
+
         int somaNotas = 0;
+
         for(int i=0; i<notas.size(); i++){
             somaNotas += notas.get(i);
         }
@@ -48,3 +58,4 @@ public abstract class Midia {
 
 
 }
+
