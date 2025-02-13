@@ -15,8 +15,10 @@ public class API {
         try {
             // Codifica o título do filme para a URL
             String tituloFormatado = URLEncoder.encode(titulo, "UTF-8");
+
             String urlString = "https://api.themoviedb.org/3/search/movie?query=" + tituloFormatado + "&language=pt-BR";
             URL url = new URL(urlString);
+
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             // Configurações da requisição
@@ -41,6 +43,8 @@ public class API {
                 JSONObject filme = resultados.getJSONObject(0);
                 String nome = filme.getString("title");
                 String capa = "https://image.tmdb.org/t/p/w500" + filme.optString("poster_path", "");
+
+
                 String anoLancamento = filme.optString("release_date", "0000").substring(0, 4);
                 int idFilme = filme.getInt("id");
 
@@ -50,6 +54,7 @@ public class API {
                 String duracao = buscarDuracao(idFilme);
 
                 // Retorna os valores como um array de Strings
+                System.out.println(capa);
                 return new String[]{nome, anoLancamento, genero, capa, diretor, duracao};
             } else {
                 System.out.println("Nenhum filme encontrado.");
