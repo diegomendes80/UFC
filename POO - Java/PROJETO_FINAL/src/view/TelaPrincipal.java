@@ -1,8 +1,11 @@
 package view;
 
+import model.Avaliacao;
 import model.Filme;
 import Service.API;
 import model.Midia;
+import model.Serie;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -17,6 +20,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class TelaPrincipal extends  JFrame {
@@ -75,9 +80,7 @@ public class TelaPrincipal extends  JFrame {
         menuButtons.add(filmeButton);
         menuButtons.add(listasButton);
 
-        for (BotaoPersonalizado botao : listButtonsHeader) {
-            botao.addActionListener(e -> clickedButton((BotaoPersonalizado) e.getSource()));
-        }
+
 
         // Adiciona o header ao container principal
         container.add(header);
@@ -87,7 +90,7 @@ public class TelaPrincipal extends  JFrame {
         JPanel panelSearch = new JPanel();
         panelSearch.setLayout(new BoxLayout(panelSearch, BoxLayout.X_AXIS));
         panelSearch.setBackground(Color.decode("#0F0F1A"));
-        panelSearch.setBorder(BorderFactory.createEmptyBorder(70, 100, 10, 100));
+        panelSearch.setBorder(BorderFactory.createEmptyBorder(30, 100, 10, 100));
 
         JLabel searchTitle = new JLabel("Explorar");
         searchTitle.setFont(new Font("Poppins", Font.BOLD, 30));
@@ -134,161 +137,65 @@ public class TelaPrincipal extends  JFrame {
 
         //AQUI TERMINA A IMPLEMENTAÇÃO DO PAINEL DE PESQUISA -------------------------------------------------
 
+        JPanel panelCards1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 5));
+        panelCards1.setBackground(Color.decode("#0F0F1A"));
+        panelCards1.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
 
-        JPanel panelCards = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        panelCards.setBackground(Color.decode("#0F0F1A"));
-        panelCards.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+        JPanel panelCards2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 5));
+        panelCards2.setBackground(Color.decode("#0F0F1A"));
+        panelCards2.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+        filmeButton.setSelected(true);
+        criaCards("Filmes", panelCards1, panelCards2);
+        AtomicReference<String> ultimoClicado = new AtomicReference<>("Filmes");
 
-        String[] filmeExposicao1 = API.buscarFilme("Moana 2");
-        String[] filmeExposicao2 = API.buscarFilme("Sonic 3: O filme");
-        String[] filmeExposicao3 = API.buscarFilme("Interestelar");
-        String[] filmeExposicao4 = API.buscarFilme("O Brutalista");
-        String[] filmeExposicao5 = API.buscarFilme("Ainda Estou Aqui");
+        for (BotaoPersonalizado botao : listButtonsHeader) {
+            botao.addActionListener(e -> {
+                clickedButton(botao);  // Atualiza a aparência visual
 
+                if (!ultimoClicado.get().equals(botao.getText())) {
+                    criaCards(botao.getText(), panelCards1, panelCards2);
+                    ultimoClicado.set(botao.getText());
+                }
 
-        //[nome, ano, genero, urlcapa, diretor, duracao]
-        // instanciando elementos de filmes para teste da API
-        Filme filme1 = new Filme(filmeExposicao1[0], filmeExposicao1[2], filmeExposicao1[1], filmeExposicao1[5], filmeExposicao1[4]);
-        Filme filme2 = new Filme(filmeExposicao2[0], filmeExposicao2[2], filmeExposicao2[1], filmeExposicao2[5], filmeExposicao2[4]);
-        Filme filme3 = new Filme(filmeExposicao3[0], filmeExposicao3[2], filmeExposicao3[1], filmeExposicao3[5], filmeExposicao3[4]);
-        Filme filme4 = new Filme(filmeExposicao4[0], filmeExposicao4[2], filmeExposicao4[1], filmeExposicao4[5], filmeExposicao4[4]);
-        Filme filme5 = new Filme(filmeExposicao5[0], filmeExposicao5[2], filmeExposicao5[1], filmeExposicao5[5], filmeExposicao5[4]);
+            });
+        }
 
-        filme1.exibirDetalhes(); //API FUNCIONANDO
-
-
-        JPanel card1 = criarCardMidia(filme1, filmeExposicao1[3]);
-        JPanel card2 = criarCardMidia(filme2, filmeExposicao2[3]);
-        JPanel card3 = criarCardMidia(filme3, filmeExposicao3[3]);
-        JPanel card4 = criarCardMidia(filme4, filmeExposicao4[3]);
-        JPanel card5 = criarCardMidia(filme5, filmeExposicao5[3]);
+       container.add(panelCards1);
+       container.add(panelCards2);
 
 
-        panelCards.add(card1);
-        panelCards.add(card2);
-        panelCards.add(card3);
-        panelCards.add(card4);
-        panelCards.add(card5);
-
-
-
-        container.add(panelCards);
-
-
-
-        // Adiciona o container principal ao JFrame
         add(container, BorderLayout.NORTH);
 
         setVisible(true);
     }
 
-    // Painel personalizado com imagem de fundo (método de corno)
-    class BackgroundPanel extends JPanel {
-        private Image backgroundImage;
+    private void criaCards(String text, JPanel panel1, JPanel panel2){
 
-        public BackgroundPanel(String imageUrl) {
-            try {
-                URL url = new URL(imageUrl);
-                backgroundImage = ImageIO.read(url);
-            } catch (IOException e) {
-                e.printStackTrace();
+        // Remover os componentes de trás para frente
+        for (int i = panel1.getComponentCount() - 1; i >= 0; i--) {
+            panel1.remove(i);
+            panel2.remove(i);
+        }
+
+    // Revalidate e Repaint após a remoção
+        panel1.revalidate();
+        panel1.repaint();
+        panel2.revalidate();
+        panel2.repaint();
+
+
+        List<JPanel> cards = escolhePainel(text);
+        for(int i=0; i<cards.size(); i++){
+            if(i < 5){
+                panel1.add(cards.get(i));
             }
-            setLayout(new BorderLayout());
-        }
+            else{
+                panel2.add(cards.get(i));
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            if (backgroundImage != null) {
-                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
             }
         }
     }
 
-
-    //cria uma classe nova pra aplicar uma sombra gradiente la nos container de titulo dos filmes/series
-    public class GradientShadowPanel extends JPanel {
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D) g.create();
-
-            int height = getHeight();
-            int width = getWidth();
-
-            // Gradiente que simula uma sombra no rodapé
-            GradientPaint shadow = new GradientPaint(0, height , new Color(0, 0, 0, 210),
-                    0, height -80, new Color(0, 0, 0, 0));
-
-            g2d.setPaint(shadow);
-            g2d.fillRect(0, height - 80, width, 80);
-
-            g2d.dispose();
-        }
-    }
-
-
-    // Método para criar o elemento VBox de exibição do filme
-    private JPanel criarCardMidia(Midia midia, String urlCapa) {
-        String nota = Double.toString(midia.getMediaNotas()); //converto a nota para string
-        String nomeMidia = midia.getTitulo();
-        String genero = midia.getGenero();
-        String anoLancamento = midia.getAnoLancamento();
-
-        JPanel card = new BackgroundPanel(urlCapa);
-        card.setLayout(new BorderLayout());
-        card.setPreferredSize(new Dimension(230, 300));
-        card.setMaximumSize(new Dimension(230, 300));
-       // System.out.println(urlCapa);
-
-
-
-        JPanel auxPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));  // Alinha à direita
-        auxPanel.setPreferredSize(new Dimension(200, 50));  // Largura máxima para o painel auxiliar
-        auxPanel.setOpaque(false); //deixa transparente
-
-        JPanel panelNota = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
-        panelNota.setPreferredSize(new Dimension(60, 30));
-        panelNota.setMaximumSize(new Dimension(60, 30));
-        panelNota.setBackground(new Color(15, 15, 26, 204));
-
-
-        JLabel labelNota = new JLabel(nota + "/5");
-
-        labelNota.setFont(new Font("Poppins", Font.BOLD, 15));
-        labelNota.setForeground(Color.decode("#E4E5EC"));
-        panelNota.add(labelNota);
-
-        auxPanel.add(panelNota);
-        card.add(auxPanel, BorderLayout.NORTH);
-
-        JPanel panelInformation = new GradientShadowPanel();
-        panelInformation.setLayout(new BoxLayout(panelInformation, BoxLayout.Y_AXIS));
-        panelInformation.setPreferredSize(new Dimension(200, 80));
-        panelInformation.setMaximumSize(new Dimension(200, 80));
-        panelInformation.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
-        panelInformation.setOpaque(false);
-
-
-        JLabel midiaTitle = new JLabel(nomeMidia);
-        midiaTitle.setFont(new Font("Poppins", Font.BOLD, 18));
-        midiaTitle.setForeground(Color.decode("#E4E5EC"));
-
-        JLabel midiaGenderYear = new JLabel(genero + " - " + anoLancamento);
-        midiaGenderYear.setFont(new Font("Poppins", Font.BOLD, 15));
-        midiaGenderYear.setForeground(Color.decode("#B5B6C9"));
-
-        panelInformation.add(midiaTitle);
-        panelInformation.add(midiaGenderYear);
-
-        card.add(Box.createVerticalGlue());
-        card.add(panelInformation, BorderLayout.SOUTH);
-
-
-        return card;
-
-    }
 
     //função que muda o estilo do botão selecionado
     private void clickedButton(BotaoPersonalizado button) {
@@ -303,6 +210,270 @@ public class TelaPrincipal extends  JFrame {
         }
     }
 
+
+
+    private List<JPanel> escolhePainel(String tipo){
+
+
+        API api = new API();
+
+        List<JPanel> listCards = new ArrayList<>();
+        //{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners}
+
+        if(tipo == "Filmes"){
+
+            Object[] filmeExposicao1 = API.buscarMidia("Moana 2", true);
+            Object[] filmeExposicao2 = API.buscarMidia("Sonic 3: O filme", true);
+            Object[] filmeExposicao3 = API.buscarMidia("Interestelar", true);
+            Object[] filmeExposicao4 = API.buscarMidia("O Brutalista", true);
+            Object[] filmeExposicao5 = API.buscarMidia("Ainda Estou Aqui", true);
+            Object[] filmeExposicao6 = API.buscarMidia("Anora", true);
+            Object[] filmeExposicao7 = API.buscarMidia("Conclave", true);
+            Object[] filmeExposicao8 = API.buscarMidia("Capitão América: Admirável Mundo Novo", true);
+            Object[] filmeExposicao9 = API.buscarMidia("Flow", true);
+            Object[] filmeExposicao10 = API.buscarMidia("Sing Sing", true);
+
+// Criando filmes com base nos dados da API
+            Filme filme1 = new Filme(
+                    (String) filmeExposicao1[0],   // título
+                    (String) filmeExposicao1[2],   // gênero
+                    (String) filmeExposicao1[1],   // ano de lançamento
+                    (String) filmeExposicao1[5],   // duração
+                    (String) filmeExposicao1[4]    // diretor
+            );
+
+            Filme filme2 = new Filme(
+                    (String) filmeExposicao2[0],
+                    (String) filmeExposicao2[2],
+                    (String) filmeExposicao2[1],
+                    (String) filmeExposicao2[5],
+                    (String) filmeExposicao2[4]
+            );
+
+            Filme filme3 = new Filme(
+                    (String) filmeExposicao3[0],
+                    (String) filmeExposicao3[2],
+                    (String) filmeExposicao3[1],
+                    (String) filmeExposicao3[5],
+                    (String) filmeExposicao3[4]
+            );
+
+            Filme filme4 = new Filme(
+                    (String) filmeExposicao4[0],
+                    (String) filmeExposicao4[2],
+                    (String) filmeExposicao4[1],
+                    (String) filmeExposicao4[5],
+                    (String) filmeExposicao4[4]
+            );
+
+            Filme filme5 = new Filme(
+                    (String) filmeExposicao5[0],
+                    (String) filmeExposicao5[2],
+                    (String) filmeExposicao5[1],
+                    (String) filmeExposicao5[5],
+                    (String) filmeExposicao5[4]
+            );
+
+            Filme filme6 = new Filme(
+                    (String) filmeExposicao6[0],
+                    (String) filmeExposicao6[2],
+                    (String) filmeExposicao6[1],
+                    (String) filmeExposicao6[5],
+                    (String) filmeExposicao6[4]
+            );
+
+            Filme filme7 = new Filme(
+                    (String) filmeExposicao7[0],
+                    (String) filmeExposicao7[2],
+                    (String) filmeExposicao7[1],
+                    (String) filmeExposicao7[5],
+                    (String) filmeExposicao7[4]
+            );
+
+            Filme filme8 = new Filme(
+                    (String) filmeExposicao8[0],
+                    (String) filmeExposicao8[2],
+                    (String) filmeExposicao8[1],
+                    (String) filmeExposicao8[5],
+                    (String) filmeExposicao8[4]
+            );
+
+            Filme filme9 = new Filme(
+                    (String) filmeExposicao9[0],
+                    (String) filmeExposicao9[2],
+                    (String) filmeExposicao9[1],
+                    (String) filmeExposicao9[5],
+                    (String) filmeExposicao9[4]
+            );
+
+            Filme filme10 = new Filme(
+                    (String) filmeExposicao10[0],
+                    (String) filmeExposicao10[2],
+                    (String) filmeExposicao10[1],
+                    (String) filmeExposicao10[5],
+                    (String) filmeExposicao10[4]
+            );
+
+// Criando os painéis de exibição
+            JPanel card1 = api.criarCardMidia(filme1, (String) filmeExposicao1[3]);
+            JPanel card2 = api.criarCardMidia(filme2, (String)filmeExposicao2[3]);
+            JPanel card3 = api.criarCardMidia(filme3, (String)filmeExposicao3[3]);
+            JPanel card4 = api.criarCardMidia(filme4, (String)filmeExposicao4[3]);
+            JPanel card5 = api.criarCardMidia(filme5, (String)filmeExposicao5[3]);
+            JPanel card6 = api.criarCardMidia(filme6, (String)filmeExposicao6[3]);
+            JPanel card7 = api.criarCardMidia(filme7, (String)filmeExposicao7[3]);
+            JPanel card8 = api.criarCardMidia(filme8, (String)filmeExposicao8[3]);
+            JPanel card9 = api.criarCardMidia(filme9, (String)filmeExposicao9[3]);
+            JPanel card10 = api.criarCardMidia(filme10, (String)filmeExposicao10[3]);
+
+
+            listCards.add(card1);
+            listCards.add(card2);
+            listCards.add(card3);
+            listCards.add(card4);
+            listCards.add(card5);
+            listCards.add(card6);
+            listCards.add(card7);
+            listCards.add(card8);
+            listCards.add(card9);
+            listCards.add(card10);
+
+
+
+        }
+
+        else if(tipo == "Séries"){
+
+            //{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners}
+
+            Object[] serieExposicao1 = API.buscarMidia("A Casa do Dragão", false);
+            Object[] serieExposicao2 = API.buscarMidia("Ruptura", false);
+            Object[] serieExposicao3 = API.buscarMidia("Game of Thrones", false);
+            Object[] serieExposicao4 = API.buscarMidia("La Casa de Papel", false);
+            Object[] serieExposicao5 = API.buscarMidia("Narcos", false);
+            Object[] serieExposicao6 = API.buscarMidia("Dark", false);
+            Object[] serieExposicao7 = API.buscarMidia("Matéria Escura", false);
+            Object[] serieExposicao8 = API.buscarMidia("Friends", false);
+            Object[] serieExposicao9 = API.buscarMidia("Lost", false);
+            Object[] serieExposicao10 = API.buscarMidia("Invencível", false);
+
+// Criando series com base nos dados da API
+            Serie serie1 = new Serie(
+                    (String) serieExposicao1[0],   // título
+                    (String) serieExposicao1[2],   // gênero
+                    (String) serieExposicao1[1],   // ano de lançamento
+                    (Integer) serieExposicao1[6], //qtd temporadas
+                    (List<String>) serieExposicao1[7]//showrunners
+
+            );
+            Serie serie2 = new Serie(
+                    (String) serieExposicao2[0],   // título
+                    (String) serieExposicao2[2],   // gênero
+                    (String) serieExposicao2[1],   // ano de lançamento
+                    (Integer) serieExposicao2[6], //qtd temporadas
+                    (List<String>) serieExposicao2[7]//showrunners
+
+            );
+
+            Serie serie3 = new Serie(
+                    (String) serieExposicao3[0],   // título
+                    (String) serieExposicao3[2],   // gênero
+                    (String) serieExposicao3[1],   // ano de lançamento
+                    (Integer) serieExposicao3[6], //qtd temporadas
+                    (List<String>) serieExposicao3[7]//showrunners
+
+            );
+
+            Serie serie4 = new Serie(
+                    (String) serieExposicao4[0],   // título
+                    (String) serieExposicao4[2],   // gênero
+                    (String) serieExposicao4[1],   // ano de lançamento
+                    (Integer) serieExposicao4[6], //qtd temporadas
+                    (List<String>) serieExposicao4[7]//showrunners
+
+            );
+
+            Serie serie5 = new Serie(
+                    (String) serieExposicao5[0],   // título
+                    (String) serieExposicao5[2],   // gênero
+                    (String) serieExposicao5[1],   // ano de lançamento
+                    (Integer) serieExposicao5[6], //qtd temporadas
+                    (List<String>) serieExposicao5[7]//showrunners
+
+            );
+
+            Serie serie6 = new Serie(
+                    (String) serieExposicao6[0],   // título
+                    (String) serieExposicao6[2],   // gênero
+                    (String) serieExposicao6[1],   // ano de lançamento
+                    (Integer) serieExposicao6[6], //qtd temporadas
+                    (List<String>) serieExposicao6[7]//showrunners
+
+            );
+
+            Serie serie7 = new Serie(
+                    (String) serieExposicao7[0],   // título
+                    (String) serieExposicao7[2],   // gênero
+                    (String) serieExposicao7[1],   // ano de lançamento
+                    (Integer) serieExposicao7[6], //qtd temporadas
+                    (List<String>) serieExposicao7[7]//showrunners
+
+            );
+
+            Serie serie8 = new Serie(
+                    (String) serieExposicao8[0],   // título
+                    (String) serieExposicao8[2],   // gênero
+                    (String) serieExposicao8[1],   // ano de lançamento
+                    (Integer) serieExposicao8[6], //qtd temporadas
+                    (List<String>) serieExposicao8[7]//showrunners
+
+            );
+
+            Serie serie9 = new Serie(
+                    (String) serieExposicao9[0],   // título
+                    (String) serieExposicao9[2],   // gênero
+                    (String) serieExposicao9[1],   // ano de lançamento
+                    (Integer) serieExposicao9[6], //qtd temporadas
+                    (List<String>) serieExposicao9[7]//showrunners
+
+            );
+            Serie serie10 = new Serie(
+                    (String) serieExposicao10[0],   // título
+                    (String) serieExposicao10[2],   // gênero
+                    (String) serieExposicao10[1],   // ano de lançamento
+                    (Integer) serieExposicao10[6], //qtd temporadas
+                    (List<String>) serieExposicao10[7]//showrunners
+
+            );
+
+// Criando os painéis de exibição
+            JPanel card1 = api.criarCardMidia(serie1, (String) serieExposicao1[3]);
+            JPanel card2 = api.criarCardMidia(serie2, (String)serieExposicao2[3]);
+            JPanel card3 = api.criarCardMidia(serie3, (String)serieExposicao3[3]);
+            JPanel card4 = api.criarCardMidia(serie4, (String)serieExposicao4[3]);
+            JPanel card5 = api.criarCardMidia(serie5, (String)serieExposicao5[3]);
+            JPanel card6 = api.criarCardMidia(serie6, (String)serieExposicao6[3]);
+            JPanel card7 = api.criarCardMidia(serie7, (String)serieExposicao7[3]);
+            JPanel card8 = api.criarCardMidia(serie8, (String)serieExposicao8[3]);
+            JPanel card9 = api.criarCardMidia(serie9, (String)serieExposicao9[3]);
+            JPanel card10 = api.criarCardMidia(serie10, (String)serieExposicao10[3]);
+
+            listCards.add(card1);
+            listCards.add(card2);
+            listCards.add(card3);
+            listCards.add(card4);
+            listCards.add(card5);
+            listCards.add(card6);
+            listCards.add(card7);
+            listCards.add(card8);
+            listCards.add(card9);
+            listCards.add(card10);
+
+
+        }
+
+        return  listCards;
+    }
 
     public static void main(String[] args) {
 

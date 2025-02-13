@@ -36,13 +36,15 @@ public abstract class Midia {
             notas.add(avaliacoes.get(i).getNota());
         }
 
-        int somaNotas = 0;
+        double somaNotas = 0;
 
         for(int i=0; i<notas.size(); i++){
             somaNotas += notas.get(i);
         }
 
-        return somaNotas/notas.size();
+        double media = somaNotas / avaliacoes.size();
+        //arredonda pra duas casas decimais
+        return Math.round(media * 10.0) / 10.0;
     }
 
     public void exibirDetalhes(){}
