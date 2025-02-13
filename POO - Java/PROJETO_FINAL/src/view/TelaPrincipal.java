@@ -87,7 +87,7 @@ public class TelaPrincipal extends  JFrame {
         JPanel panelSearch = new JPanel();
         panelSearch.setLayout(new BoxLayout(panelSearch, BoxLayout.X_AXIS));
         panelSearch.setBackground(Color.decode("#0F0F1A"));
-        panelSearch.setBorder(BorderFactory.createEmptyBorder(100, 100, 10, 100));
+        panelSearch.setBorder(BorderFactory.createEmptyBorder(70, 100, 10, 100));
 
         JLabel searchTitle = new JLabel("Explorar");
         searchTitle.setFont(new Font("Poppins", Font.BOLD, 30));
@@ -135,7 +135,7 @@ public class TelaPrincipal extends  JFrame {
         //AQUI TERMINA A IMPLEMENTAÇÃO DO PAINEL DE PESQUISA -------------------------------------------------
 
 
-        JPanel panelCards  = new JPanel(new GridLayout(1, 0, 10, 10));
+        JPanel panelCards = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         panelCards.setBackground(Color.decode("#0F0F1A"));
         panelCards.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
 
@@ -182,7 +182,51 @@ public class TelaPrincipal extends  JFrame {
         setVisible(true);
     }
 
+    // Painel personalizado com imagem de fundo (método de corno)
+    class BackgroundPanel extends JPanel {
+        private Image backgroundImage;
 
+        public BackgroundPanel(String imageUrl) {
+            try {
+                URL url = new URL(imageUrl);
+                backgroundImage = ImageIO.read(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            setLayout(new BorderLayout());
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (backgroundImage != null) {
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            }
+        }
+    }
+
+
+    //cria uma classe nova pra aplicar uma sombra gradiente la nos container de titulo dos filmes/series
+    public class GradientShadowPanel extends JPanel {
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g.create();
+
+            int height = getHeight();
+            int width = getWidth();
+
+            // Gradiente que simula uma sombra no rodapé
+            GradientPaint shadow = new GradientPaint(0, height , new Color(0, 0, 0, 210),
+                    0, height -80, new Color(0, 0, 0, 0));
+
+            g2d.setPaint(shadow);
+            g2d.fillRect(0, height - 80, width, 80);
+
+            g2d.dispose();
+        }
+    }
 
 
     // Método para criar o elemento VBox de exibição do filme
@@ -192,18 +236,17 @@ public class TelaPrincipal extends  JFrame {
         String genero = midia.getGenero();
         String anoLancamento = midia.getAnoLancamento();
 
-        JPanel card = new JPanel();
+        JPanel card = new BackgroundPanel(urlCapa);
         card.setLayout(new BorderLayout());
-        card.setPreferredSize(new Dimension(300, 300));
-        card.setMaximumSize(new Dimension(300, 300));
-        System.out.println(urlCapa);
+        card.setPreferredSize(new Dimension(230, 300));
+        card.setMaximumSize(new Dimension(230, 300));
+       // System.out.println(urlCapa);
 
 
-       // card.setBackground(Color.BLACK);
 
         JPanel auxPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));  // Alinha à direita
-        auxPanel.setPreferredSize(new Dimension(300, 50));  // Largura máxima para o painel auxiliar
-
+        auxPanel.setPreferredSize(new Dimension(200, 50));  // Largura máxima para o painel auxiliar
+        auxPanel.setOpaque(false); //deixa transparente
 
         JPanel panelNota = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         panelNota.setPreferredSize(new Dimension(60, 30));
@@ -220,15 +263,16 @@ public class TelaPrincipal extends  JFrame {
         auxPanel.add(panelNota);
         card.add(auxPanel, BorderLayout.NORTH);
 
-        JPanel panelInformation = new JPanel();
+        JPanel panelInformation = new GradientShadowPanel();
         panelInformation.setLayout(new BoxLayout(panelInformation, BoxLayout.Y_AXIS));
-        panelInformation.setPreferredSize(new Dimension(300, 80));
-        panelInformation.setMaximumSize(new Dimension(300, 80));
-        //panelInformation.setBackground(Color.red);
+        panelInformation.setPreferredSize(new Dimension(200, 80));
+        panelInformation.setMaximumSize(new Dimension(200, 80));
+        panelInformation.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        panelInformation.setOpaque(false);
 
 
         JLabel midiaTitle = new JLabel(nomeMidia);
-        midiaTitle.setFont(new Font("Poppins", Font.BOLD, 17));
+        midiaTitle.setFont(new Font("Poppins", Font.BOLD, 18));
         midiaTitle.setForeground(Color.decode("#E4E5EC"));
 
         JLabel midiaGenderYear = new JLabel(genero + " - " + anoLancamento);

@@ -1,4 +1,4 @@
-package Service;
+
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -54,7 +54,7 @@ public class API {
                 String duracao = buscarDuracao(idFilme);
 
                 // Retorna os valores como um array de Strings
-                //System.out.println(capa);
+                System.out.println(capa);
                 return new String[]{nome, anoLancamento, genero, capa, diretor, duracao};
             } else {
                 System.out.println("Nenhum filme encontrado.");
