@@ -144,8 +144,14 @@ public class TelaPrincipal extends  JFrame {
         JPanel panelCards2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 5));
         panelCards2.setBackground(Color.decode("#0F0F1A"));
         panelCards2.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+
+        List<JPanel> cardsFilmes = criaCards("Filmes");
+        List<JPanel> cardsSeries = criaCards("Séries");
+
+       //por padrão o botao de filmes começa clicado
         filmeButton.setSelected(true);
-        criaCards("Filmes", panelCards1, panelCards2);
+        criaPainel(cardsFilmes, panelCards1, panelCards2);
+        clickedButton(filmeButton);
         AtomicReference<String> ultimoClicado = new AtomicReference<>("Filmes");
 
         for (BotaoPersonalizado botao : listButtonsHeader) {
@@ -153,7 +159,14 @@ public class TelaPrincipal extends  JFrame {
                 clickedButton(botao);  // Atualiza a aparência visual
 
                 if (!ultimoClicado.get().equals(botao.getText())) {
-                    criaCards(botao.getText(), panelCards1, panelCards2);
+                    if(botao.getText().equals("Filmes")){
+                        criaPainel(cardsFilmes, panelCards1, panelCards2);
+
+                    }
+                    else if(botao.getText().equals("Séries")){
+                        criaPainel(cardsSeries, panelCards1, panelCards2);
+
+                    }
                     ultimoClicado.set(botao.getText());
                 }
 
@@ -169,7 +182,7 @@ public class TelaPrincipal extends  JFrame {
         setVisible(true);
     }
 
-    private void criaCards(String text, JPanel panel1, JPanel panel2){
+    private void criaPainel(List<JPanel> cards, JPanel panel1, JPanel panel2){
 
         // Remover os componentes de trás para frente
         for (int i = panel1.getComponentCount() - 1; i >= 0; i--) {
@@ -184,7 +197,7 @@ public class TelaPrincipal extends  JFrame {
         panel2.repaint();
 
 
-        List<JPanel> cards = escolhePainel(text);
+
         for(int i=0; i<cards.size(); i++){
             if(i < 5){
                 panel1.add(cards.get(i));
@@ -212,7 +225,7 @@ public class TelaPrincipal extends  JFrame {
 
 
 
-    private List<JPanel> escolhePainel(String tipo){
+    private List<JPanel> criaCards(String tipo){
 
 
         API api = new API();
