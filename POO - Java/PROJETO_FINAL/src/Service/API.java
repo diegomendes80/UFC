@@ -297,7 +297,7 @@ public class API {
     }
 
 
-    // Método para criar o elemento VBox de exibição do filme
+    // Método para criar o elemento card de exibição do filme
     public JPanel criarCardMidia(Midia midia, String urlCapa) {
         String nota = Double.toString(midia.getMediaNotas()); //converto a nota para string
         String nomeMidia = midia.getTitulo();
