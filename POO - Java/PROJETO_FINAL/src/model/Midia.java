@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Midia {
+public class Midia {
     private String titulo;
     private String genero;
     private String anoLancamento;
@@ -47,7 +47,7 @@ public abstract class Midia {
         return Math.round(media * 10.0) / 10.0;
     }
 
-    public void exibirDetalhes(){}
+
 
     public void setAvaliacao(Avaliacao avaliacao){
         avaliacoes.add(avaliacao);

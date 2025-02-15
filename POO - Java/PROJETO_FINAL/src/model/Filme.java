@@ -22,11 +22,11 @@ public class Filme extends Midia {
     }
 
     @Override
-    public void exibirDetalhes(){
-        System.out.println("Filme: " + this.getTitulo());
-        System.out.println("Gênero: " + this.getGenero());
-        System.out.println("Duração: " + this.getDuracaoMinutos());
-        System.out.println("Diretor: " + this.getDiretor());
-        System.out.println("Ano Lançamento: " + this.getAnoLancamento());
+    public String toString(){
+        return "Filme: " + this.getTitulo() + "\n" +
+                "Gênero: " + this.getGenero() + "\n" +
+                "Duração: " + this.getDuracaoMinutos() + " min\n" +
+                "Diretor: " + this.getDiretor() + "\n" +
+                "Ano Lançamento: " + this.getAnoLancamento();
     }
 }

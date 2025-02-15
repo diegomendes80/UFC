@@ -1,0 +1,70 @@
+[
+  {
+    "qtdTemporadas": 0,
+    "showrunners": [],
+    "titulo": "Game of Thrones",
+    "genero": "Sci-Fi \u0026 Fantasy",
+    "anoLancamento": "2011",
+    "avaliacoes": [
+      {
+        "usuario": "Diego",
+        "nota": 4.2,
+        "resenha": "teste"
+      }
+    ]
+  },
+  {
+    "titulo": "Dark",
+    "genero": "Crime",
+    "anoLancamento": "2017",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "Ruptura",
+    "genero": "Drama",
+    "anoLancamento": "2022",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "A Casa do Dragão",
+    "genero": "Sci-Fi \u0026 Fantasy",
+    "anoLancamento": "2022",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "Lost",
+    "genero": "Mistério",
+    "anoLancamento": "2004",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "Friends",
+    "genero": "Comédia",
+    "anoLancamento": "1994",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "INVENCÍVEL",
+    "genero": "Animação",
+    "anoLancamento": "2021",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "Black Mirror",
+    "genero": "Sci-Fi \u0026 Fantasy",
+    "anoLancamento": "2011",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "Stranger Things",
+    "genero": "Drama",
+    "anoLancamento": "2016",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "Lupin",
+    "genero": "Drama",
+    "anoLancamento": "2007",
+    "avaliacoes": []
+  }
+]

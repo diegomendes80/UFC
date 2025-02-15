@@ -21,5 +21,13 @@ public class Serie extends Midia{
         return qtdTemporadas;
     }
 
+    @Override
+    public String toString(){
+        return "Nome: " + this.getTitulo() + "\n" +
+                "Gênero: " + this.getGenero() + "\n" +
+                "Temporadas: " + this.getQtdTemporadas() + "\n" +
+                "Showrunners: " + this.getShowrunners() + "\n" +
+                "Ano Lançamento: " + this.getAnoLancamento();
+    }
 
 }

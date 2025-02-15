@@ -3,9 +3,12 @@ package view;
 import model.Avaliacao;
 import model.Filme;
 import Service.API;
+import Service.Json;
 import model.Midia;
 import model.Serie;
-
+import com.google.gson.Gson;
+import java.io.FileWriter;
+import com.google.gson.GsonBuilder;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -197,10 +200,14 @@ public class TelaPrincipal extends  JFrame {
         setVisible(true);
     }
 
+
+
+
     private List<JPanel> criaCards(String tipo, List<String> nomes){
 
 
         API api = new API();
+        Json json = new Json();
 
         List<JPanel> listCards = new ArrayList<>();
         List<Object> midiasAPI = new ArrayList<>();
@@ -223,6 +230,9 @@ public class TelaPrincipal extends  JFrame {
                         (String) dados[5],  // duração
                         (String) dados[4]   // diretor
                 ));
+
+
+                json.salvaMidia(listMidias.get(i), "Filmes");
             }
 
             for(int i=0; i < listMidias.size(); i++){
@@ -233,7 +243,6 @@ public class TelaPrincipal extends  JFrame {
 
 
         }
-
 
 
         else if(tipo == "Séries"){
@@ -253,7 +262,14 @@ public class TelaPrincipal extends  JFrame {
                         (Integer) dados[6], //qtd temporadas
                         (List<String>) dados[7]// showrunners
                 ));
+
+
+                json.salvaMidia(listMidias.get(i), "Séries");
+
             }
+
+           // listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 4.2, "teste"));
+            //json.atualizaMidia(listMidias.get(0), "Séries");
 
             for(int i=0; i < listMidias.size(); i++){
                 Object[] dados = (Object[]) midiasAPI.get(i);
@@ -297,10 +313,38 @@ public class TelaPrincipal extends  JFrame {
 
     private void criaCardPesquisado(String nomeMidia, String tipo, JPanel panel1, JPanel panel2){
         API api = new API();
+        Json json = new Json();
         List<String> nomes = new ArrayList<>();
         nomes.add(nomeMidia);
+
         List<JPanel> cards = criaCards(tipo, nomes);
         criaPainel(cards, panel1, panel2);
+
+        if(tipo.equals("Filmes")){
+            Object[] midia = API.buscarMidia(nomeMidia, true);
+            Object[] dados = (Object[]) midia;
+
+            json.salvaMidia(new Filme(
+                    (String) dados[0],  // título
+                    (String) dados[2],  // gênero
+                    (String) dados[1],  // ano de lançamento
+                    (String) dados[5],  // duração
+                    (String) dados[4]  //diretor
+            ), "Filmes");
+
+        } else if (tipo.equals("Séries")) {
+            Object[] midia = API.buscarMidia(nomeMidia, false);
+            Object[] dados = (Object[]) midia;
+            json.salvaMidia(new Serie(
+                    (String) dados[0],  // título
+                    (String) dados[2],  // gênero
+                    (String) dados[1],  // ano de lançamento
+                    (Integer) dados[6], //qtd temporadas
+                    (List<String>) dados[7]// showrunners
+            ), "Séries");
+        }
+
+
     }
 
     //função que muda o estilo do botão selecionado
