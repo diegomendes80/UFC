@@ -60,11 +60,23 @@
     "avaliacoes": []
   },
   {
-    "duracaoMinutos": "92 min",
-    "diretor": "Michael Jelenic",
     "titulo": "Super Mario Bros. O Filme",
     "genero": "Animação",
     "anoLancamento": "2023",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "Game of Thrones: A Última Vigília",
+    "genero": "Documentário",
+    "anoLancamento": "2019",
+    "avaliacoes": []
+  },
+  {
+    "duracaoMinutos": "125 min",
+    "diretor": "Jeff Fowler",
+    "titulo": "Sonic 2: O Filme",
+    "genero": "Ação",
+    "anoLancamento": "2022",
     "avaliacoes": []
   }
 ]

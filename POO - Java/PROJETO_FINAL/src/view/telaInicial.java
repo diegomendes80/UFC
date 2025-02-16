@@ -1,33 +1,22 @@
 package view;
 
-import model.Avaliacao;
 import model.Filme;
 import Service.API;
 import Service.Json;
 import model.Midia;
 import model.Serie;
-import com.google.gson.Gson;
-import java.io.FileWriter;
-import com.google.gson.GsonBuilder;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.imageio.ImageIO;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-public class TelaPrincipal extends  JFrame {
+public class telaInicial extends  JPanel {
 
     public class BotaoPersonalizado extends JRadioButton {
         //é como se fosse uma classe do css
@@ -36,6 +25,8 @@ public class TelaPrincipal extends  JFrame {
 
             // Definindo o estilo padrão do botão
             setIcon(new ImageIcon(new byte[0]));
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
+
             setSelectedIcon(new ImageIcon(new byte[0]));
             setBackground(Color.decode("#131320"));
             setForeground(Color.decode("#7A7B9F"));
@@ -50,11 +41,11 @@ public class TelaPrincipal extends  JFrame {
 
         private List<BotaoPersonalizado> listButtonsHeader = new ArrayList<>();
 
-    public TelaPrincipal(){
-        setTitle("Home"); // Define o título da janela
+
+
+    public JPanel criaTela(){
+
         setSize(1920, 1080); // Define o tamanho da janela (largura, altura)
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao fechar a janela
-        setLocationRelativeTo(null);
         setBackground(Color.decode("#0F0F1A"));
         setLayout(new BorderLayout()); // Definir layout principal
 
@@ -93,7 +84,7 @@ public class TelaPrincipal extends  JFrame {
         JPanel panelSearch = new JPanel();
         panelSearch.setLayout(new BoxLayout(panelSearch, BoxLayout.X_AXIS));
         panelSearch.setBackground(Color.decode("#0F0F1A"));
-        panelSearch.setBorder(BorderFactory.createEmptyBorder(30, 100, 10, 100));
+        panelSearch.setBorder(BorderFactory.createEmptyBorder(0, 100, 10, 100));
 
         JLabel searchTitle = new JLabel("Explorar");
         searchTitle.setFont(new Font("Poppins", Font.BOLD, 30));
@@ -195,10 +186,11 @@ public class TelaPrincipal extends  JFrame {
        container.add(panelCards2);
 
 
-        add(container, BorderLayout.NORTH);
+        //add(container, BorderLayout.NORTH);
 
-        setVisible(true);
+        return container;
     }
+
 
 
 
@@ -241,6 +233,23 @@ public class TelaPrincipal extends  JFrame {
 
             }
 
+            //adiciona o evento de ao clicar no card levar pra avaliação dele
+            for (int i=0; i < listCards.size(); i++){
+                JPanel card = listCards.get(i);
+                Midia filme = listMidias.get(i);
+
+                card.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(card);
+                        TelaAvaliacao telaAvaliacao = new TelaAvaliacao(mainFrame);
+                        telaAvaliacao.criaPainelAvaliacao(filme, "Filmes");
+                        mainFrame.mostrarTela("telaAvaliação");
+                    }
+
+                });
+            }
+
 
         }
 
@@ -264,9 +273,9 @@ public class TelaPrincipal extends  JFrame {
                 ));
 
 
-                json.salvaMidia(listMidias.get(i), "Séries");
-
             }
+
+
 
            // listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 4.2, "teste"));
             //json.atualizaMidia(listMidias.get(0), "Séries");
@@ -275,6 +284,23 @@ public class TelaPrincipal extends  JFrame {
                 Object[] dados = (Object[]) midiasAPI.get(i);
                 listCards.add(api.criarCardMidia(listMidias.get(i), (String) dados[3]));
 
+            }
+
+            //adiciona o evento de ao clicar no card levar pra avaliação dele
+            for (int i=0; i < listCards.size(); i++){
+                JPanel card = listCards.get(i);
+                Midia serie = listMidias.get(i);
+
+                card.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(card);
+                        TelaAvaliacao telaAvaliacao = new TelaAvaliacao(mainFrame);
+                        telaAvaliacao.criaPainelAvaliacao(serie, "Séries");
+                        mainFrame.mostrarTela("telaAvaliação");
+                    }
+
+                });
             }
 
 
@@ -363,20 +389,6 @@ public class TelaPrincipal extends  JFrame {
 
 
 
-
-    public static void main(String[] args) {
-
-
-        TelaPrincipal tela = new TelaPrincipal();
-        tela.getContentPane().setBackground(Color.decode("#0F0F1A"));//instancia a tela
-        tela.setVisible(true); //inicia a tela
-
-
-
-
-
-
-    }
 
 
 
