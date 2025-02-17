@@ -217,7 +217,7 @@ public class telaInicial extends  JPanel {
         List<JPanel> listCards = new ArrayList<>();
         List<Object> midiasAPI = new ArrayList<>();
         List<Midia> listMidias = new ArrayList<>();
-        //{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners}
+        //{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners, sinopse}
 
         if(tipo == "Filmes"){
 
@@ -256,7 +256,7 @@ public class telaInicial extends  JPanel {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(card);
-                        mainFrame.mostrarTelaAvaliacao(filme, "Filmes", (String) dados[3]);
+                        mainFrame.mostrarTelaAvaliacao(filme, "Filmes", (String) dados[3], (String) dados[8]);
                     }
 
                 });
@@ -309,7 +309,7 @@ public class telaInicial extends  JPanel {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(card);
-                        mainFrame.mostrarTelaAvaliacao(serie, "Séries", (String) dados[3]);
+                        mainFrame.mostrarTelaAvaliacao(serie, "Séries", (String) dados[3], (String) dados[8]);
 
 
                     }

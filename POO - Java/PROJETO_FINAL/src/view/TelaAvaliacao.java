@@ -3,6 +3,7 @@ import model.Midia;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -62,7 +63,7 @@ public class TelaAvaliacao extends JPanel{
         }
     }
 
-    public JPanel criaTela(Midia midia, String tipo, String urlCapa){
+    public JPanel criaTela(Midia midia, String tipo, String urlCapa, String sinopse){
 
         setSize(1920, 1080);
 
@@ -105,41 +106,101 @@ public class TelaAvaliacao extends JPanel{
 
         //HEADER TERMINA AQUI ------------------------------------------------------------
 
-        container.add(criaPainelAvaliacao(midia, tipo, urlCapa));
+        container.add(criaPainelAvaliacao(midia, tipo, urlCapa, sinopse));
 
 
         return container;
     }
 
-    public JPanel criaPainelAvaliacao(Midia midia, String tipo, String urlCapa){
-        JPanel panelMidia = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
-        panelMidia.setMaximumSize(new Dimension(1920, 400));
-        panelMidia.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
-        panelMidia.setBackground(Color.red);
-
-        JPanel midiaFoto = new BackgroundPanel(urlCapa);
-        midiaFoto.setLayout(new FlowLayout(FlowLayout.LEFT));
-        midiaFoto.setPreferredSize(new Dimension(220, 280));
-        midiaFoto.setMaximumSize(new Dimension(220, 280));
-
-        JPanel midiaInformation = new JPanel();
-        midiaInformation.setLayout(new BoxLayout(midiaInformation, BoxLayout.Y_AXIS));
-        midiaInformation.setBackground(Color.decode("#0F0F1A"));
-        JLabel midiaTitle = new JLabel(midia.getTitulo());
-        midiaTitle.setFont(new Font("Poppins", Font.BOLD, 30));
-        midiaTitle.setForeground(Color.decode("#E4E5EC"));
-
-        JLabel midiaGenero = new JLabel("Gênero: "  + midia.getGenero());
-        midiaGenero.setFont(new Font("Poppins", Font.BOLD, 15));
-        midiaGenero.setForeground(Color.decode("#B5B6C9"));
+        public JPanel criaPainelAvaliacao(Midia midia, String tipo, String urlCapa, String sinopse){
+            JPanel panelMidia = new JPanel();
+            panelMidia.setLayout(new BoxLayout(panelMidia, BoxLayout.X_AXIS));
+            panelMidia.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
+            panelMidia.setMaximumSize(new Dimension(1920, 400));
+            panelMidia.setBackground(Color.decode("#0F0F1A"));
 
 
-        midiaInformation.add(midiaTitle);
-        midiaInformation.add(midiaGenero);
 
-        panelMidia.add(midiaFoto);
-        panelMidia.add(midiaInformation);
+            JPanel midiaFoto = new BackgroundPanel(urlCapa);
+            midiaFoto.setLayout(new FlowLayout(FlowLayout.LEFT));
+            midiaFoto.setPreferredSize(new Dimension(260, 350));
+            midiaFoto.setMaximumSize(new Dimension(260, 350));
 
-        return panelMidia;
+            JPanel leftContainer = new JPanel();
+            leftContainer.setLayout(new BoxLayout(leftContainer, BoxLayout.Y_AXIS));
+            leftContainer.add(midiaFoto);
+            leftContainer.add(Box.createVerticalGlue());
+            leftContainer.setBackground(Color.decode("#0F0F1A"));
+
+            JPanel midiaInformation = new JPanel();
+
+
+            midiaInformation.setLayout(new BoxLayout(midiaInformation, BoxLayout.Y_AXIS));
+            midiaInformation.setBackground(Color.decode("#0F0F1A"));
+
+            JLabel midiaTitle = new JLabel(midia.getTitulo());
+            midiaTitle.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
+            midiaTitle.setFont(new Font("Poppins", Font.BOLD, 30));
+            midiaTitle.setForeground(Color.decode("#E4E5EC"));
+
+            JLabel midiaGenero = new JLabel("Gênero: "  + midia.getGenero());
+            midiaGenero.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+            midiaGenero.setFont(new Font("Poppins", Font.BOLD, 15));
+            midiaGenero.setForeground(Color.decode("#B5B6C9"));
+
+            JLabel midiaAno = new JLabel("Ano de Lançamento: "  + midia.getAnoLancamento());
+            midiaAno.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+            midiaAno.setFont(new Font("Poppins", Font.BOLD, 15));
+            midiaAno.setForeground(Color.decode("#B5B6C9"));
+
+            JLabel midiaNota = new JLabel(Double.toString(midia.getMediaNotas()));
+            midiaNota.setBorder(BorderFactory.createEmptyBorder(5, 0, 15, 0));
+            midiaNota.setFont(new Font("Poppins", Font.BOLD, 20));
+            midiaNota.setForeground(Color.decode("#A85FDD"));
+
+
+            JLabel midiaSinopse = new JLabel("<html><body style='width:450px;'>" + sinopse + "</body></html>");
+
+            midiaSinopse.setFont(new Font("Poppins", Font.PLAIN, 12));
+            midiaSinopse.setForeground(Color.decode("#B5B6C9"));
+
+
+            midiaInformation.add(midiaTitle);
+            midiaInformation.add(midiaGenero);
+            midiaInformation.add(midiaAno);
+            midiaInformation.add(midiaNota);
+            midiaInformation.add(midiaSinopse);
+
+            JPanel rightContainer = new JPanel();
+            rightContainer.setLayout(new BoxLayout(rightContainer, BoxLayout.Y_AXIS));
+            rightContainer.add(midiaInformation);
+
+
+            rightContainer.setBackground(Color.decode("#0F0F1A"));
+
+           // rightContainer.add(Box.createVerticalGlue());
+
+            if(midia.getAvaliacoes().isEmpty()){
+                JButton avaliaButton = new JButton("Avaliar");
+                avaliaButton.setBackground(Color.decode("#892CCD"));
+                avaliaButton.setForeground(Color.decode("#FFFFFF"));
+                avaliaButton.setFont(new Font("Poppins", Font.BOLD, 15));
+                avaliaButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                rightContainer.add(Box.createVerticalStrut(20));
+                avaliaButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+                avaliaButton.setBorder(BorderFactory.createEmptyBorder(5, 2, 5, 2));
+                avaliaButton.setMaximumSize(new Dimension(130, 40));
+                avaliaButton.setBorder(new LineBorder(Color.decode("#0F0F1A"), 2, true));
+                midiaInformation.add(Box.createVerticalGlue());
+                midiaInformation.add(avaliaButton);
+
+            }
+
+
+            panelMidia.add(leftContainer);
+            panelMidia.add(Box.createHorizontalStrut(30));
+            panelMidia.add(rightContainer);
+
+            return panelMidia;
+        }
     }
-}

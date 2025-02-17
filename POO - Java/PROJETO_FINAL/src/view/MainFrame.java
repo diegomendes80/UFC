@@ -48,9 +48,9 @@ public class MainFrame extends JFrame {
 
     }
 
-    public void mostrarTelaAvaliacao(Midia midia, String tipo, String urlCapa) {
+    public void mostrarTelaAvaliacao(Midia midia, String tipo, String urlCapa, String sinopse) {
         TelaAvaliacao telaAvaliacao = new TelaAvaliacao(this);
-        JPanel novaTela =  telaAvaliacao.criaTela(midia, tipo, urlCapa);
+        JPanel novaTela =  telaAvaliacao.criaTela(midia, tipo, urlCapa, sinopse);
 
 
         for (int i = contentPanel.getComponentCount() - 1; i >= 0; i--) {

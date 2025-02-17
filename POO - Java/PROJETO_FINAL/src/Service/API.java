@@ -57,6 +57,7 @@ public class API {
             if (resultados.length() > 0) {
                 JSONObject media = resultados.getJSONObject(0);
                 String nome = isFilme ? media.getString("title") : media.getString("name");
+                String sinopse = media.optString("overview", "Sinopse não disponível");
                 String capa = "https://image.tmdb.org/t/p/w500" + media.optString("poster_path", "");
                 String anoLancamento = isFilme ? media.optString("release_date", "0000").substring(0, 4) :
                         media.optString("first_air_date", "0000").substring(0, 4);
@@ -75,7 +76,7 @@ public class API {
                     showrunners = buscarShowrunners(idMidia);
                 }
 
-                return new Object[]{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners};
+                return new Object[]{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners, sinopse};
             } else {
                 System.out.println("Nenhuma mídia encontrada.");
                 return new Object[]{"Nenhuma mídia encontrada", "", "", "", "", "", 0, new ArrayList<String>()};
