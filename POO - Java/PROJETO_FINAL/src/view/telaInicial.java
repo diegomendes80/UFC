@@ -18,6 +18,24 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class telaInicial extends  JPanel {
 
+    List<String> filmesIniciais = new ArrayList<>();
+    List<String> seriesIniciais = new ArrayList<>();
+    List<JPanel> cardsFilmes = new ArrayList<>();
+    List<JPanel> cardsSeries = new ArrayList<>();
+
+
+    public telaInicial(){
+
+        //assim que instancia uma tela inicial ele já pega na api os cards iniciais. Isso só é feito uma vez
+        //quando o programa inicia, assim não é criado denovo e denovo em execução, poupando assim tempo.
+        filmesIniciais.addAll(List.of("Moana 2", "Interestelar", "O Brutalista", "Ainda estou aqui", "Sonic 3", "A substância", "Flow", "Sing Sing", "Conclave", "Mufasa"));
+        seriesIniciais.addAll(List.of("Game of Thrones", "Dark", "Ruptura", "A Casa do Dragão", "Lost", "Friends", "Invencível", "Black Mirror", "Stranger Things", "Lupin"));
+
+        cardsFilmes = criaCards("Filmes", filmesIniciais);
+        cardsSeries = criaCards("Séries", seriesIniciais);
+
+    }
+
     public class BotaoPersonalizado extends JRadioButton {
         //é como se fosse uma classe do css
         public BotaoPersonalizado(String texto) {
@@ -141,13 +159,8 @@ public class telaInicial extends  JPanel {
 
 
         //cria os cards iniciais antes de iniciar o app pra não ter que ficar criando durante a execução
-        List<String> filmesIniciais = new ArrayList<>();
-        List<String> seriesIniciais = new ArrayList<>();
-        filmesIniciais.addAll(List.of("Moana 2", "Interestelar", "O Brutalista", "Ainda estou aqui", "Sonic 3", "A substância", "Flow", "Sing Sing", "Conclave", "Mufasa"));
-        seriesIniciais.addAll(List.of("Game of Thrones", "Dark", "Ruptura", "A Casa do Dragão", "Lost", "Friends", "Invencível", "Black Mirror", "Stranger Things", "Lupin"));
 
-        List<JPanel> cardsFilmes = criaCards("Filmes", filmesIniciais);
-        List<JPanel> cardsSeries = criaCards("Séries", seriesIniciais);
+
 
        //por padrão o botao de filmes começa clicado
         filmeButton.setSelected(true);
@@ -237,14 +250,13 @@ public class telaInicial extends  JPanel {
             for (int i=0; i < listCards.size(); i++){
                 JPanel card = listCards.get(i);
                 Midia filme = listMidias.get(i);
+                Object[] dados = (Object[]) midiasAPI.get(i);
 
                 card.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(card);
-                        TelaAvaliacao telaAvaliacao = new TelaAvaliacao(mainFrame);
-                        telaAvaliacao.criaPainelAvaliacao(filme, "Filmes");
-                        mainFrame.mostrarTela("telaAvaliação");
+                        mainFrame.mostrarTelaAvaliacao(filme, "Filmes", (String) dados[3]);
                     }
 
                 });
@@ -290,14 +302,16 @@ public class telaInicial extends  JPanel {
             for (int i=0; i < listCards.size(); i++){
                 JPanel card = listCards.get(i);
                 Midia serie = listMidias.get(i);
+                Object[] dados = (Object[]) midiasAPI.get(i);
+
 
                 card.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(card);
-                        TelaAvaliacao telaAvaliacao = new TelaAvaliacao(mainFrame);
-                        telaAvaliacao.criaPainelAvaliacao(serie, "Séries");
-                        mainFrame.mostrarTela("telaAvaliação");
+                        mainFrame.mostrarTelaAvaliacao(serie, "Séries", (String) dados[3]);
+
+
                     }
 
                 });

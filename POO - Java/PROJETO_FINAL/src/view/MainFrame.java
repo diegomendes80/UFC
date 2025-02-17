@@ -1,5 +1,7 @@
 package view;
 
+import model.Midia;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -22,21 +24,34 @@ public class MainFrame extends JFrame {
 
 
 
-        mostrarTela("telaInicial");  // Exibe a tela inicial corretamente
+        mostrarTelaInicial();  // Exibe a tela inicial corretamente
 
         setVisible(true);
     }
 
-    public void mostrarTela(String tela) {
-        TelaAvaliacao telaAvaliacao = new TelaAvaliacao(this);
-        JPanel novaTela = new JPanel();
+    public void mostrarTelaInicial() {
 
-        if(tela.equals("telaAvaliação")){
-            novaTela = telaAvaliacao.criaTela();
-        } else if (tela.equals("telaInicial")) {
-            novaTela = telaInicial.criaTela();
+        JPanel novaTela = telaInicial.criaTela();
+
+
+        for (int i = contentPanel.getComponentCount() - 1; i >= 0; i--) {
+            contentPanel.remove(i);
 
         }
+
+        // Revalidate e Repaint após a remoção
+        contentPanel.revalidate();
+        contentPanel.repaint();
+
+
+        contentPanel.add(novaTela, BorderLayout.CENTER);
+
+    }
+
+    public void mostrarTelaAvaliacao(Midia midia, String tipo, String urlCapa) {
+        TelaAvaliacao telaAvaliacao = new TelaAvaliacao(this);
+        JPanel novaTela =  telaAvaliacao.criaTela(midia, tipo, urlCapa);
+
 
         for (int i = contentPanel.getComponentCount() - 1; i >= 0; i--) {
             contentPanel.remove(i);
