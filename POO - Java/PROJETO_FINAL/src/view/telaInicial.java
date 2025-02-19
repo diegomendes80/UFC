@@ -31,8 +31,8 @@ public class telaInicial extends  JPanel {
         filmesIniciais.addAll(List.of("Moana 2", "Interestelar", "O Brutalista", "Ainda estou aqui", "Sonic 3", "A substância", "Flow", "Sing Sing", "Conclave", "Mufasa"));
         seriesIniciais.addAll(List.of("Game of Thrones", "Dark", "Ruptura", "A Casa do Dragão", "Lost", "Friends", "Invencível", "Black Mirror", "Stranger Things", "Lupin"));
 
-        cardsFilmes = criaCards("Filmes", filmesIniciais);
-        cardsSeries = criaCards("Séries", seriesIniciais);
+        cardsFilmes = criaCards("Filmes", filmesIniciais, true);
+        cardsSeries = criaCards("Séries", seriesIniciais, true);
 
     }
 
@@ -208,7 +208,7 @@ public class telaInicial extends  JPanel {
 
 
 
-    private List<JPanel> criaCards(String tipo, List<String> nomes){
+    private List<JPanel> criaCards(String tipo, List<String> nomes, boolean isCardInicial){
 
 
         API api = new API();
@@ -221,8 +221,15 @@ public class telaInicial extends  JPanel {
 
         if(tipo == "Filmes"){
 
+
+
             for(int i=0; i < nomes.size(); i++){
                 midiasAPI.add(API.buscarMidia(nomes.get(i), true));
+                Object[] dados = (Object[]) midiasAPI.get(i);
+
+               /* String caminhoCardsIniciais = System.getProperty("user.dir") + "/src/Service/filmesIniciais.json";
+                json.salvaMidiasIniciais(dados, caminhoCardsIniciais);*/
+
             }
 
 
@@ -237,7 +244,8 @@ public class telaInicial extends  JPanel {
                 ));
 
 
-                json.salvaMidia(listMidias.get(i), "Filmes");
+                String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todosFilmes.json";
+                json.salvaMidia(listMidias.get(i), "Filmes", caminhoArquivo);
             }
 
             for(int i=0; i < listMidias.size(); i++){
@@ -271,6 +279,11 @@ public class telaInicial extends  JPanel {
             //{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners}
             for(int i=0; i < nomes.size(); i++){
                 midiasAPI.add(API.buscarMidia(nomes.get(i), false));
+                Object[] dados = (Object[]) midiasAPI.get(i);
+
+                /*String caminhoCardsIniciais = System.getProperty("user.dir") + "/src/Service/seriesIniciais.json";
+                json.salvaMidiasIniciais(dados, caminhoCardsIniciais);*/
+
             }
 
 
@@ -284,6 +297,8 @@ public class telaInicial extends  JPanel {
                         (List<String>) dados[7]// showrunners
                 ));
 
+                String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todasSeries.json";
+                json.salvaMidia(listMidias.get(i), "Séries", caminhoArquivo);
 
             }
 
@@ -357,12 +372,14 @@ public class telaInicial extends  JPanel {
         List<String> nomes = new ArrayList<>();
         nomes.add(nomeMidia);
 
-        List<JPanel> cards = criaCards(tipo, nomes);
+        List<JPanel> cards = criaCards(tipo, nomes, false);
         criaPainel(cards, panel1, panel2);
 
         if(tipo.equals("Filmes")){
             Object[] midia = API.buscarMidia(nomeMidia, true);
             Object[] dados = (Object[]) midia;
+            String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todosFilmes.json";
+
 
             json.salvaMidia(new Filme(
                     (String) dados[0],  // título
@@ -370,18 +387,20 @@ public class telaInicial extends  JPanel {
                     (String) dados[1],  // ano de lançamento
                     (String) dados[5],  // duração
                     (String) dados[4]  //diretor
-            ), "Filmes");
+            ), "Filmes", caminhoArquivo);
 
         } else if (tipo.equals("Séries")) {
             Object[] midia = API.buscarMidia(nomeMidia, false);
             Object[] dados = (Object[]) midia;
+            String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todasSeries.json";
+
             json.salvaMidia(new Serie(
                     (String) dados[0],  // título
                     (String) dados[2],  // gênero
                     (String) dados[1],  // ano de lançamento
                     (Integer) dados[6], //qtd temporadas
                     (List<String>) dados[7]// showrunners
-            ), "Séries");
+            ), "Séries", caminhoArquivo);
         }
 
 
