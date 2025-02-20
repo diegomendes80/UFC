@@ -79,6 +79,32 @@ public class TelaAvaliacao extends JPanel{
 
     }
 
+    //outro metodo de corno pra arredondar os cantos dos jpanels
+    public class RoundedPanel extends JPanel {
+        private int arcWidth;
+        private int arcHeight;
+
+        public RoundedPanel(int arcWidth, int arcHeight) {
+            this.arcWidth = arcWidth;
+            this.arcHeight = arcHeight;
+            setOpaque(false); // Torna o fundo transparente para desenhar o painel arredondado
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Define a cor de fundo
+            g2.setColor(getBackground());
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), arcWidth, arcHeight);
+
+            g2.dispose();
+        }
+    }
+
+
     private MainFrame mainFrame;
     public TelaAvaliacao(MainFrame mainFrame){
         this.mainFrame = mainFrame;
@@ -88,12 +114,12 @@ public class TelaAvaliacao extends JPanel{
 
     // Painel personalizado com imagem de fundo (método de corno)
     class BackgroundPanel extends JPanel {
-        private Image backgroundImage;
+        private ImageIcon backgroundImage;
 
         public BackgroundPanel(String imageUrl) {
             try {
                 URL url = new URL(imageUrl);
-                backgroundImage = ImageIO.read(url);
+                backgroundImage = new ImageIcon(url);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -104,10 +130,28 @@ public class TelaAvaliacao extends JPanel{
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             if (backgroundImage != null) {
-                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+                int imgWidth = backgroundImage.getIconWidth();
+                int imgHeight = backgroundImage.getIconHeight();
+                int panelWidth = getWidth();
+                int panelHeight = getHeight();
+
+                // Calcular a escala da imagem para manter a proporção sem distorção
+                double widthRatio = (double) panelWidth / imgWidth;
+                double heightRatio = (double) panelHeight / imgHeight;
+                double scale = Math.max(widthRatio, heightRatio);
+
+                int newWidth = (int) (imgWidth * scale);
+                int newHeight = (int) (imgHeight * scale);
+
+                // Centraliza a imagem
+                int x = (panelWidth - newWidth) / 2;
+                int y = (panelHeight - newHeight) / 2;
+
+                g.drawImage(backgroundImage.getImage(), x, y, newWidth, newHeight, this);
             }
         }
     }
+
 
     public JPanel criaTela(Midia midia, String tipo, String urlCapa, String sinopse){
 
@@ -177,14 +221,15 @@ public class TelaAvaliacao extends JPanel{
 
             JPanel midiaFoto = new BackgroundPanel(urlCapa);
             midiaFoto.setLayout(new FlowLayout(FlowLayout.LEFT));
-            midiaFoto.setPreferredSize(new Dimension(260, 350));
-            midiaFoto.setMaximumSize(new Dimension(260, 350));
+            midiaFoto.setPreferredSize(new Dimension(240, 380));
+            midiaFoto.setMaximumSize(new Dimension(240, 380));
 
             JPanel leftContainer = new JPanel();
             leftContainer.setLayout(new BoxLayout(leftContainer, BoxLayout.Y_AXIS));
             leftContainer.add(midiaFoto);
             leftContainer.add(Box.createVerticalGlue());
             leftContainer.setBackground(Color.decode("#0F0F1A"));
+
 
             JPanel midiaInformation = new JPanel();
             midiaInformation.setLayout(new BoxLayout(midiaInformation, BoxLayout.Y_AXIS));
@@ -233,16 +278,9 @@ public class TelaAvaliacao extends JPanel{
             JPanel panelResenha = new JPanel();
             panelResenha.setLayout(new BoxLayout(panelResenha, BoxLayout.Y_AXIS));
             panelResenha.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            panelResenha.setMaximumSize(new Dimension(1920, 400));
             panelResenha.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
-            panelResenha.setMaximumSize(new Dimension(1920, 400));
+            panelResenha.setMaximumSize(new Dimension(1920, 280));
             panelResenha.setBackground(Color.decode("#0F0F1A"));
-            JLabel resenhaTitle = new JLabel("Avaliações:");
-            resenhaTitle.setBorder(BorderFactory.createEmptyBorder(5, 0, 15, 0));
-            resenhaTitle.setFont(new Font("Poppins", Font.BOLD, 15));
-            resenhaTitle.setForeground(Color.decode("#A85FDD"));
-            panelResenha.add(resenhaTitle);
 
 
                 RoundedButton avaliaButton = new RoundedButton("Avaliar");
@@ -272,47 +310,16 @@ public class TelaAvaliacao extends JPanel{
                 midiaInformation.add(Box.createVerticalGlue());
                 midiaInformation.add(avaliaButton);
 
-            Json json = new Json();
-
-            List<Midia> filmes = json.getFilmes();
-            List<Midia> series = json.getSeries();
-
-            if (tipo.equals("Filmes")) {
-                for (Midia filme : filmes) {
-                    if (filme.getTitulo().equals(midia.getTitulo())) {
-                        if (!filme.getAvaliacoes().isEmpty()) {
-                            avaliaButton.setVisible(false);
-                            int maxAvaliacoes = Math.min(filme.getAvaliacoes().size(), 3); //pega 3 ou menos avaliações
-                            for (int i = 0; i < maxAvaliacoes; i++) {
-                                panelResenha.add(criaCardResenha(filme.getAvaliacoes().get(i)));
-
-                            }
-                        }
-                    }
-                }
-            } else if (tipo.equals("Séries")) {
-                for (Midia serie : series) {
-                    if (serie.getTitulo().equals(midia.getTitulo())) {
-                        if (!serie.getAvaliacoes().isEmpty()) {
-                            avaliaButton.setVisible(false);
-                            int maxAvaliacoes = Math.min(serie.getAvaliacoes().size(), 3);
-                            for (int i = 0; i < maxAvaliacoes; i++) {
-                                panelResenha.add(criaCardResenha(serie.getAvaliacoes().get(i)));
-                            }
-                        }
-                    }
-                }
-            }
-
+            adicionaResenhas(midia, tipo, panelResenha);
 
 
             panelMidia.add(leftContainer);
             panelMidia.add(Box.createHorizontalStrut(30));
             panelMidia.add(rightContainer);
 
-            panelResenha.setBackground(Color.red);
+            panelMidia.setBackground(Color.red);
             container.add(panelMidia);
-          //  container.add(Box.createVerticalStrut(10));
+            container.add(Box.createVerticalStrut(10));
             container.add(panelResenha);
 
             return container;
@@ -458,27 +465,91 @@ public class TelaAvaliacao extends JPanel{
 
         }
 
-        public JPanel criaCardResenha(Avaliacao avaliacao){
-            JPanel card = new JPanel();
-            card.setLayout(new BoxLayout(card, BoxLayout.X_AXIS));
-            card.setBackground(Color.decode("#131320"));
+    public void adicionaResenhas(Midia midia, String tipo, JPanel panel){
+        Json json = new Json();
 
-            JPanel containerUser = new JPanel();
-            containerUser.setLayout(new BoxLayout(containerUser, BoxLayout.X_AXIS));
-            containerUser.setMaximumSize(new Dimension(100, 30));
-            containerUser.setBackground(Color.decode("#131320"));
-            containerUser.setAlignmentX(LEFT_ALIGNMENT);
+        List<Midia> filmes = json.getFilmes();
+        List<Midia> series = json.getSeries();
 
-            JLabel userName = new JLabel(avaliacao.getUsuario());
-            userName.setFont(new Font("Poppins", Font.PLAIN, 16));
-            userName.setForeground(Color.decode("#E4E5EC"));
-            userName.setAlignmentX(CENTER_ALIGNMENT);
-            userName.setAlignmentY(CENTER_ALIGNMENT);
+        panel.add(Box.createVerticalStrut(150));
 
-            containerUser.add(userName);
-            card.add(containerUser);
+        if (tipo.equals("Filmes")) {
+            for (Midia filme : filmes) {
+                if (filme.getTitulo().equals(midia.getTitulo())) {
+                    if (!filme.getAvaliacoes().isEmpty()) {
 
+                        int maxAvaliacoes = Math.min(filme.getAvaliacoes().size(), 2);
+                        for (int i = 0; i < maxAvaliacoes; i++) {
+                            panel.add(criaCardResenha(filme.getAvaliacoes().get(i)));
+                            panel.add(Box.createVerticalStrut(20));
 
-            return card;
+                        }
+                    }
+                }
+            }
+        } else if (tipo.equals("Séries")) {
+            for (Midia serie : series) {
+                if (serie.getTitulo().equals(midia.getTitulo())) {
+                    if (!serie.getAvaliacoes().isEmpty()) {
+
+                        int maxAvaliacoes = Math.min(serie.getAvaliacoes().size(), 2);
+                        for (int i = 0; i < maxAvaliacoes; i++) {
+                            panel.add(criaCardResenha(serie.getAvaliacoes().get(i)));
+                            panel.add(Box.createVerticalStrut(20));
+                        }
+                    }
+                }
+            }
         }
     }
+
+    public JPanel criaCardResenha(Avaliacao avaliacao) {
+        RoundedPanel card = new RoundedPanel(15, 15);
+        card.setLayout(new BorderLayout());
+        card.setPreferredSize(new Dimension(1920, 100));
+        card.setBackground(Color.decode("#131320"));
+        card.setBorder(new EmptyBorder(10, 20, 10, 20));
+
+
+        JPanel containerUser = new JPanel();
+        containerUser.setLayout(new FlowLayout(FlowLayout.LEFT));
+        containerUser.setBackground(Color.decode("#131320"));
+
+        JLabel userName = new JLabel(avaliacao.getUsuario());
+        userName.setFont(new Font("Poppins", Font.PLAIN, 18));
+        userName.setForeground(Color.decode("#E4E5EC"));
+
+        containerUser.add(userName);
+        containerUser.add(Box.createHorizontalStrut(10));
+
+        JPanel containerResenha = new JPanel();
+        containerResenha.setLayout(new FlowLayout(FlowLayout.LEFT));
+        containerResenha.setBackground(Color.decode("#131320"));
+
+        JLabel userResenha = new JLabel(avaliacao.getResenha());
+        userResenha.setFont(new Font("Poppins", Font.PLAIN, 16));
+        userResenha.setForeground(Color.decode("#7A7B9F"));
+        userResenha.setHorizontalAlignment(SwingConstants.LEFT);
+
+        containerResenha.add(userResenha);
+
+
+        JPanel containerNota = new JPanel();
+        containerNota.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        containerNota.setBackground(Color.decode("#131320"));
+
+        JLabel nota = new JLabel( Double.toString(avaliacao.getNota()));
+        nota.setFont(new Font("Poppins", Font.BOLD, 18));
+        nota.setForeground(Color.decode("#E4E5EC"));
+
+        containerNota.add(Box.createHorizontalStrut(10));
+        containerNota.add(nota);
+
+        card.add(containerUser, BorderLayout.WEST);
+        card.add(containerResenha, BorderLayout.CENTER);
+        card.add(containerNota, BorderLayout.EAST);
+
+        return card;
+    }
+
+}

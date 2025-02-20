@@ -249,7 +249,13 @@ public class telaInicial extends  JPanel {
                 json.salvaMidia(listMidias.get(i), "Filmes", caminhoArquivo);
             }
 
-            listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 4.2, "testetestetetetetet"));
+            listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 4.2, "Uma fusão hipnotizante de drama e fantasia, este filme nos leva a um universo surreal repleto de simbolismo e emoção."));
+            json.atualizaMidia(listMidias.get(0), "Filmes");
+
+            listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 4.0, "testetestetetetetet"));
+            json.atualizaMidia(listMidias.get(0), "Filmes");
+
+            listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 3.0, "testetestetetetetet"));
             json.atualizaMidia(listMidias.get(0), "Filmes");
 
             for(int i=0; i < listMidias.size(); i++){

@@ -1,7 +1,5 @@
 [
   {
-    "qtdTemporadas": 0,
-    "showrunners": [],
     "titulo": "Game of Thrones",
     "genero": "Sci-Fi \u0026 Fantasy",
     "anoLancamento": "2011",
@@ -65,6 +63,14 @@
     "titulo": "Lupin",
     "genero": "Drama",
     "anoLancamento": "2007",
+    "avaliacoes": []
+  },
+  {
+    "qtdTemporadas": 0,
+    "showrunners": [],
+    "titulo": "Erro ao buscar mídia",
+    "genero": "",
+    "anoLancamento": "",
     "avaliacoes": []
   }
 ]

@@ -9,6 +9,16 @@
       {
         "usuario": "Diego",
         "nota": 4.2,
+        "resenha": "Uma fusão hipnotizante de drama e fantasia, este filme nos leva a um universo surreal repleto de simbolismo e emoção."
+      },
+      {
+        "usuario": "Diego",
+        "nota": 4.0,
+        "resenha": "testetestetetetetet"
+      },
+      {
+        "usuario": "Diego",
+        "nota": 3.0,
         "resenha": "testetestetetetetet"
       }
     ]
@@ -84,5 +94,17 @@
     "genero": "Ação",
     "anoLancamento": "2022",
     "avaliacoes": []
+  },
+  {
+    "titulo": "Erro ao buscar mídia",
+    "genero": "",
+    "anoLancamento": "",
+    "avaliacoes": [
+      {
+        "usuario": "Diego",
+        "nota": 4.2,
+        "resenha": "testetestetetetetet"
+      }
+    ]
   }
 ]

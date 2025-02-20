@@ -20,11 +20,11 @@ public class MainFrame extends JFrame {
         getContentPane().setBackground(Color.decode("#0F0F1A"));
 
         contentPanel.setBackground(Color.decode("#0F0F1A"));
-        add(contentPanel, BorderLayout.CENTER);  // Corrigido: Adicionando ao centro do JFrame
+        add(contentPanel, BorderLayout.CENTER);
 
 
 
-        mostrarTelaInicial();  // Exibe a tela inicial corretamente
+        mostrarTelaInicial();
 
         setVisible(true);
     }
