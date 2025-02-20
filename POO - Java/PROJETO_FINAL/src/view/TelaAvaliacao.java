@@ -1,4 +1,5 @@
 package view;
+import Service.Json;
 import model.Avaliacao;
 import model.Midia;
 
@@ -271,16 +272,37 @@ public class TelaAvaliacao extends JPanel{
                 midiaInformation.add(Box.createVerticalGlue());
                 midiaInformation.add(avaliaButton);
 
+            Json json = new Json();
 
-            if(!midia.getAvaliacoes().isEmpty()){
-                avaliaButton.setVisible(false);
-                int count=0;
-                while(count <= midia.getAvaliacoes().size() && count <= 3){
-                    criaCardResenha(midia.getAvaliacoes().get(count));
-                    count++;
+            List<Midia> filmes = json.getFilmes();
+            List<Midia> series = json.getSeries();
+
+            if (tipo.equals("Filmes")) {
+                for (Midia filme : filmes) {
+                    if (filme.getTitulo().equals(midia.getTitulo())) {
+                        if (!filme.getAvaliacoes().isEmpty()) {
+                            avaliaButton.setVisible(false);
+                            int maxAvaliacoes = Math.min(filme.getAvaliacoes().size(), 3); //pega 3 ou menos avaliações
+                            for (int i = 0; i < maxAvaliacoes; i++) {
+                                panelResenha.add(criaCardResenha(filme.getAvaliacoes().get(i)));
+
+                            }
+                        }
+                    }
+                }
+            } else if (tipo.equals("Séries")) {
+                for (Midia serie : series) {
+                    if (serie.getTitulo().equals(midia.getTitulo())) {
+                        if (!serie.getAvaliacoes().isEmpty()) {
+                            avaliaButton.setVisible(false);
+                            int maxAvaliacoes = Math.min(serie.getAvaliacoes().size(), 3);
+                            for (int i = 0; i < maxAvaliacoes; i++) {
+                                panelResenha.add(criaCardResenha(serie.getAvaliacoes().get(i)));
+                            }
+                        }
+                    }
                 }
             }
-
 
 
 
@@ -288,7 +310,7 @@ public class TelaAvaliacao extends JPanel{
             panelMidia.add(Box.createHorizontalStrut(30));
             panelMidia.add(rightContainer);
 
-
+            panelResenha.setBackground(Color.red);
             container.add(panelMidia);
           //  container.add(Box.createVerticalStrut(10));
             container.add(panelResenha);
@@ -438,9 +460,23 @@ public class TelaAvaliacao extends JPanel{
 
         public JPanel criaCardResenha(Avaliacao avaliacao){
             JPanel card = new JPanel();
+            card.setLayout(new BoxLayout(card, BoxLayout.X_AXIS));
+            card.setBackground(Color.decode("#131320"));
 
-           
+            JPanel containerUser = new JPanel();
+            containerUser.setLayout(new BoxLayout(containerUser, BoxLayout.X_AXIS));
+            containerUser.setMaximumSize(new Dimension(100, 30));
+            containerUser.setBackground(Color.decode("#131320"));
+            containerUser.setAlignmentX(LEFT_ALIGNMENT);
 
+            JLabel userName = new JLabel(avaliacao.getUsuario());
+            userName.setFont(new Font("Poppins", Font.PLAIN, 16));
+            userName.setForeground(Color.decode("#E4E5EC"));
+            userName.setAlignmentX(CENTER_ALIGNMENT);
+            userName.setAlignmentY(CENTER_ALIGNMENT);
+
+            containerUser.add(userName);
+            card.add(containerUser);
 
 
             return card;

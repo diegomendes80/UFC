@@ -1,5 +1,6 @@
 package view;
 
+import model.Avaliacao;
 import model.Filme;
 import Service.API;
 import Service.Json;
@@ -247,6 +248,9 @@ public class telaInicial extends  JPanel {
                 String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todosFilmes.json";
                 json.salvaMidia(listMidias.get(i), "Filmes", caminhoArquivo);
             }
+
+            listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 4.2, "testetestetetetetet"));
+            json.atualizaMidia(listMidias.get(0), "Filmes");
 
             for(int i=0; i < listMidias.size(); i++){
                 Object[] dados = (Object[]) midiasAPI.get(i);

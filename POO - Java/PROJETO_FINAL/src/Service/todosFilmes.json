@@ -1,9 +1,17 @@
 [
   {
+    "duracaoMinutos": "100 min",
+    "diretor": "David G. Derrick Jr.",
     "titulo": "Moana 2",
     "genero": "Animação",
     "anoLancamento": "2024",
-    "avaliacoes": []
+    "avaliacoes": [
+      {
+        "usuario": "Diego",
+        "nota": 4.2,
+        "resenha": "testetestetetetetet"
+      }
+    ]
   },
   {
     "titulo": "Interestelar",
@@ -72,8 +80,6 @@
     "avaliacoes": []
   },
   {
-    "duracaoMinutos": "125 min",
-    "diretor": "Jeff Fowler",
     "titulo": "Sonic 2: O Filme",
     "genero": "Ação",
     "anoLancamento": "2022",
