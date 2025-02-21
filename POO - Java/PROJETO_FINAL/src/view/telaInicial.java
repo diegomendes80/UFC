@@ -29,7 +29,7 @@ public class telaInicial extends  JPanel {
 
         //assim que instancia uma tela inicial ele já pega na api os cards iniciais. Isso só é feito uma vez
         //quando o programa inicia, assim não é criado denovo e denovo em execução, poupando assim tempo.
-        filmesIniciais.addAll(List.of("Moana 2", "Interestelar", "O Brutalista", "Ainda estou aqui", "Sonic 3", "A substância", "Flow", "Sing Sing", "Conclave", "Mufasa"));
+        filmesIniciais.addAll(List.of("Moana 2", "Interestelar", "O Brutalista", "Ainda estou aqui", "Sonic 3: o filme", "A Substância", "Flow", "Sing - Quem Canta Seus Males Espanta", "Conclave", "Mufasa: O Rei Leão"));
         seriesIniciais.addAll(List.of("Game of Thrones", "Dark", "Ruptura", "A Casa do Dragão", "Lost", "Friends", "Invencível", "Black Mirror", "Stranger Things", "Lupin"));
 
         cardsFilmes = criaCards("Filmes", filmesIniciais, true);
@@ -192,7 +192,7 @@ public class telaInicial extends  JPanel {
 
         //adicionando o evento do campo de busca (TextField)
         searchInput.addActionListener(e -> {
-            criaCardPesquisado(searchInput.getText(), String.valueOf(ultimoClicado), panelCards1, panelCards2);
+            criaCardPesquisado(searchInput.getText(), ultimoClicado.get(), panelCards1, panelCards2);
             ultimoClicado.set("");
         });
 
@@ -218,49 +218,70 @@ public class telaInicial extends  JPanel {
         List<JPanel> listCards = new ArrayList<>();
         List<Object> midiasAPI = new ArrayList<>();
         List<Midia> listMidias = new ArrayList<>();
+        List<String> nomesFormatados  = new ArrayList<>();
+
+        for(String nome : nomes){
+            String movieORtv = tipo.equals("Filmes") ? "movie" : "tv";
+            nomesFormatados.add(API.buscarTitulo(nome, movieORtv));
+        }
+
+        List<Midia> filmesExistentes = json.getFilmes();
+        List<Midia> seriesExistentes = json.getSeries();
         //{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners, sinopse}
 
-        if(tipo == "Filmes"){
+        if(tipo.equals("Filmes")) {
 
 
+            if (!filmesExistentes.isEmpty()) {
+                for (int i = 0; i < nomesFormatados.size(); i++) {
+                    for (int j = 0; j < filmesExistentes.size(); j++) {
+                        if (filmesExistentes.get(j).getTitulo().equals(nomesFormatados.get(i))) {
+                            listMidias.add(filmesExistentes.get(j));
+                            nomesFormatados.remove(i);
+                            i--;
+                            break;
+                        }
 
-            for(int i=0; i < nomes.size(); i++){
-                midiasAPI.add(API.buscarMidia(nomes.get(i), true));
-                Object[] dados = (Object[]) midiasAPI.get(i);
-
-               /* String caminhoCardsIniciais = System.getProperty("user.dir") + "/src/Service/filmesIniciais.json";
-                json.salvaMidiasIniciais(dados, caminhoCardsIniciais);*/
-
+                    }
+                }
             }
 
 
-            for(int i=0; i < midiasAPI.size(); i++){
-                Object[] dados = (Object[]) midiasAPI.get(i);
-                listMidias.add(new Filme(
-                        (String) dados[0],  // título
-                        (String) dados[2],  // gênero
-                        (String) dados[1],  // ano de lançamento
-                        (String) dados[5],  // duração
-                        (String) dados[4]   // diretor
-                ));
+            if(!nomesFormatados.isEmpty()){
+            //se entrou aqui quer dizer que o filme ainda não foi colocado na base de dados
+
+                for(int i=0; i < nomesFormatados.size(); i++){
+                    midiasAPI.add(API.buscarMidia(nomesFormatados.get(i), true));
 
 
-                String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todosFilmes.json";
-                json.salvaMidia(listMidias.get(i), "Filmes", caminhoArquivo);
+                }
+
+
+                for(int i=0; i < midiasAPI.size(); i++){
+                    Object[] dados = (Object[]) midiasAPI.get(i);
+                    listMidias.add(new Filme(
+                            (String) dados[0],  // título
+                            (String) dados[2],  // gênero
+                            (String) dados[1],  // ano de lançamento
+                            (String) dados[3], //urlCapa
+                            (String) dados[8], //sinopse
+                            (String) dados[5],  // duração
+                            (String) dados[4]  // diretor
+
+                    ));
+
+
+                    String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todosFilmes.json";
+                    json.salvaMidia(listMidias.get(i), "Filmes", caminhoArquivo);
+                }
+
+
             }
 
-            listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 4.2, "Uma fusão hipnotizante de drama e fantasia, este filme nos leva a um universo surreal repleto de simbolismo e emoção."));
-            json.atualizaMidia(listMidias.get(0), "Filmes");
-
-            listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 4.0, "testetestetetetetet"));
-            json.atualizaMidia(listMidias.get(0), "Filmes");
-
-            listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 3.0, "testetestetetetetet"));
-            json.atualizaMidia(listMidias.get(0), "Filmes");
 
             for(int i=0; i < listMidias.size(); i++){
-                Object[] dados = (Object[]) midiasAPI.get(i);
-                listCards.add(api.criarCardMidia(listMidias.get(i), (String) dados[3]));
+
+                listCards.add(api.criarCardMidia(listMidias.get(i)));
 
             }
 
@@ -268,13 +289,13 @@ public class telaInicial extends  JPanel {
             for (int i=0; i < listCards.size(); i++){
                 JPanel card = listCards.get(i);
                 Midia filme = listMidias.get(i);
-                Object[] dados = (Object[]) midiasAPI.get(i);
+
 
                 card.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(card);
-                        mainFrame.mostrarTelaAvaliacao(filme, "Filmes", (String) dados[3], (String) dados[8]);
+                        mainFrame.mostrarTelaAvaliacao(filme, "Filmes");
                     }
 
                 });
@@ -284,42 +305,57 @@ public class telaInicial extends  JPanel {
         }
 
 
-        else if(tipo == "Séries"){
+        else if(tipo.equals("Séries")){
 
-            //{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners}
-            for(int i=0; i < nomes.size(); i++){
-                midiasAPI.add(API.buscarMidia(nomes.get(i), false));
-                Object[] dados = (Object[]) midiasAPI.get(i);
 
-                /*String caminhoCardsIniciais = System.getProperty("user.dir") + "/src/Service/seriesIniciais.json";
-                json.salvaMidiasIniciais(dados, caminhoCardsIniciais);*/
+            if(!seriesExistentes.isEmpty()){
+                for(int i=0; i < nomesFormatados.size(); i++){
+                    for(int j=0; j < seriesExistentes.size(); j++){
+                        if(seriesExistentes.get(j).getTitulo().equals(nomesFormatados.get(i))){
+                            listMidias.add(seriesExistentes.get(j));
+                            nomesFormatados.remove(i);
+                            i--;
+                            break;
+                        }
+
+                    }
+                }
+            }
+            if(!nomesFormatados.isEmpty()){
+                //{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners}
+                for(int i=0; i < nomesFormatados.size(); i++){
+                    midiasAPI.add(API.buscarMidia(nomesFormatados.get(i), false));
+
+
+                }
+
+
+                for(int i=0; i < midiasAPI.size(); i++){
+                    Object[] dados = (Object[]) midiasAPI.get(i);
+                    listMidias.add(new Serie(
+                            (String) dados[0],  // título
+                            (String) dados[2],  // gênero
+                            (String) dados[1],  // ano de lançamento
+                            (String) dados[3], //urlCapa
+                            (String) dados[8], //sinopse
+                            (Integer) dados[6], //qtd temporadas
+                            (List<String>) dados[7]// showrunners
+
+                    ));
+
+                    String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todasSeries.json";
+                    json.salvaMidia(listMidias.get(i), "Séries", caminhoArquivo);
+
+                }
 
             }
 
 
-            for(int i=0; i < midiasAPI.size(); i++){
-                Object[] dados = (Object[]) midiasAPI.get(i);
-                listMidias.add(new Serie(
-                        (String) dados[0],  // título
-                        (String) dados[2],  // gênero
-                        (String) dados[1],  // ano de lançamento
-                        (Integer) dados[6], //qtd temporadas
-                        (List<String>) dados[7]// showrunners
-                ));
 
-                String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todasSeries.json";
-                json.salvaMidia(listMidias.get(i), "Séries", caminhoArquivo);
-
-            }
-
-
-
-           // listMidias.get(0).setAvaliacao(new Avaliacao("Diego", 4.2, "teste"));
-            //json.atualizaMidia(listMidias.get(0), "Séries");
 
             for(int i=0; i < listMidias.size(); i++){
-                Object[] dados = (Object[]) midiasAPI.get(i);
-                listCards.add(api.criarCardMidia(listMidias.get(i), (String) dados[3]));
+
+                listCards.add(api.criarCardMidia(listMidias.get(i)));
 
             }
 
@@ -327,14 +363,13 @@ public class telaInicial extends  JPanel {
             for (int i=0; i < listCards.size(); i++){
                 JPanel card = listCards.get(i);
                 Midia serie = listMidias.get(i);
-                Object[] dados = (Object[]) midiasAPI.get(i);
 
 
                 card.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         MainFrame mainFrame = (MainFrame) SwingUtilities.getWindowAncestor(card);
-                        mainFrame.mostrarTelaAvaliacao(serie, "Séries", (String) dados[3], (String) dados[8]);
+                        mainFrame.mostrarTelaAvaliacao(serie, "Séries");
 
 
                     }
@@ -385,33 +420,6 @@ public class telaInicial extends  JPanel {
         List<JPanel> cards = criaCards(tipo, nomes, false);
         criaPainel(cards, panel1, panel2);
 
-        if(tipo.equals("Filmes")){
-            Object[] midia = API.buscarMidia(nomeMidia, true);
-            Object[] dados = (Object[]) midia;
-            String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todosFilmes.json";
-
-
-            json.salvaMidia(new Filme(
-                    (String) dados[0],  // título
-                    (String) dados[2],  // gênero
-                    (String) dados[1],  // ano de lançamento
-                    (String) dados[5],  // duração
-                    (String) dados[4]  //diretor
-            ), "Filmes", caminhoArquivo);
-
-        } else if (tipo.equals("Séries")) {
-            Object[] midia = API.buscarMidia(nomeMidia, false);
-            Object[] dados = (Object[]) midia;
-            String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todasSeries.json";
-
-            json.salvaMidia(new Serie(
-                    (String) dados[0],  // título
-                    (String) dados[2],  // gênero
-                    (String) dados[1],  // ano de lançamento
-                    (Integer) dados[6], //qtd temporadas
-                    (List<String>) dados[7]// showrunners
-            ), "Séries", caminhoArquivo);
-        }
 
 
     }

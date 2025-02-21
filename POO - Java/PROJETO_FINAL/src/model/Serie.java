@@ -7,8 +7,8 @@ public class Serie extends Midia{
     private int qtdTemporadas;
     List<String> showrunners;
 
-    public Serie(String titulo, String genero, String anoLancamento, int qtdTemporadas, List<String> showrunners) {
-        super(titulo, genero, anoLancamento);
+    public Serie(String titulo, String genero, String anoLancamento, String urlCapa, String sinopse, int qtdTemporadas, List<String> showrunners) {
+        super(titulo, genero, anoLancamento, urlCapa, sinopse);
         this.qtdTemporadas = qtdTemporadas;
         this.showrunners = showrunners;
     }

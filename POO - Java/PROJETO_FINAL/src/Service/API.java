@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
@@ -20,6 +21,46 @@ import javax.swing.*;
 
 public class API {
     private static final String ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNTY4N2Q4MzY2NGFjM2E0MmVhYTE3NTg4YmMxZTNhZSIsIm5iZiI6MTczODg1Mzg0Ni43LCJzdWIiOiI2N2E0Y2RkNmRmMzM2ZjM4YWI4NWJmMTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.vMUzOdwEUnPajIGJqtthksIx4_cTN_5UykVgZpgLgRM";
+
+
+    public static String buscarTitulo(String nome, String tipo) {
+        try {
+            if (!tipo.equals("movie") && !tipo.equals("tv")) {
+                return "Tipo inválido. Use 'movie' para filmes ou 'tv' para séries.";
+            }
+
+            String nomeFormatado = URLEncoder.encode(nome, "UTF-8");
+            String urlString = "https://api.themoviedb.org/3/search/" + tipo + "?query=" + nomeFormatado + "&language=pt-BR";
+
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization", "Bearer " + ACCESS_TOKEN);
+            conn.setRequestProperty("Accept", "application/json");
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            JSONObject jsonResponse = new JSONObject(response.toString());
+            JSONArray resultados = jsonResponse.getJSONArray("results");
+
+            if (resultados.length() > 0) {
+                JSONObject titulo = resultados.getJSONObject(0);
+                return tipo.equals("tv") ? titulo.getString("name") : titulo.getString("title"); // "name" para séries, "title" para filmes
+            } else {
+                return "Nenhum resultado encontrado";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Erro ao buscar título";
+        }
+    }
 
 
 
@@ -247,18 +288,18 @@ public class API {
     }
 
 
-
-
-
-
     // Painel personalizado com imagem de fundo (método de corno)
     class BackgroundPanel extends JPanel {
         private Image backgroundImage;
 
         public BackgroundPanel(String imageUrl) {
             try {
-                URL url = new URL(imageUrl);
-                backgroundImage = ImageIO.read(url);
+                if (imageUrl != null && !imageUrl.isEmpty()) {
+                    URL url = new URL(imageUrl); // Aqui a URL será criada se for válida
+                    backgroundImage = ImageIO.read(url);
+                } else {
+                    throw new MalformedURLException("URL inválida ou vazia");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -287,8 +328,8 @@ public class API {
             int width = getWidth();
 
             // Gradiente que simula uma sombra no rodapé
-            GradientPaint shadow = new GradientPaint(0, height , new Color(0, 0, 0, 210),
-                    0, height -80, new Color(0, 0, 0, 0));
+            GradientPaint shadow = new GradientPaint(0, height, new Color(0, 0, 0, 210),
+                    0, height - 80, new Color(0, 0, 0, 0));
 
             g2d.setPaint(shadow);
             g2d.fillRect(0, height - 80, width, 80);
@@ -299,11 +340,12 @@ public class API {
 
 
     // Método para criar o elemento card de exibição do filme
-    public JPanel criarCardMidia(Midia midia, String urlCapa) {
+    public JPanel criarCardMidia(Midia midia) {
         String nota = Double.toString(midia.getMediaNotas()); //converto a nota para string
         String nomeMidia = midia.getTitulo();
         String genero = midia.getGenero();
         String anoLancamento = midia.getAnoLancamento();
+        String urlCapa = midia.getUrlCapa();
 
         JPanel card = new BackgroundPanel(urlCapa);
         card.setLayout(new BorderLayout());
@@ -359,5 +401,5 @@ public class API {
     }
 
 
-    }
+}
 

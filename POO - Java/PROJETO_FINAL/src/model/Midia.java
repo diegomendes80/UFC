@@ -7,12 +7,28 @@ public class Midia {
     private String titulo;
     private String genero;
     private String anoLancamento;
+    private String urlCapa;
+    private String sinopse;
+    //private String codigo;
     List<Avaliacao> avaliacoes = new ArrayList<>();
 
-    public Midia(String titulo, String genero, String anoLancamento) {
+    public Midia(String titulo, String genero, String anoLancamento, String urlCapa, String sinopse) {
         this.titulo = titulo;
         this.genero = genero;
         this.anoLancamento = anoLancamento;
+        this.urlCapa = urlCapa;
+        this.sinopse = sinopse;
+
+    }
+
+
+
+    public String getSinopse() {
+        return sinopse;
+    }
+
+    public String getUrlCapa() {
+        return urlCapa;
     }
 
     public String getTitulo() {

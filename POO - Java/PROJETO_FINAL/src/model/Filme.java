@@ -7,8 +7,8 @@ public class Filme extends Midia {
     private String diretor;
 
 
-    public Filme(String titulo, String genero, String anoLancamento, String duracaoMinutos, String diretor) {
-        super(titulo, genero, anoLancamento);
+    public Filme(String titulo, String genero, String anoLancamento, String urlCapa, String sinopse, String duracaoMinutos, String diretor) {
+        super(titulo, genero, anoLancamento, urlCapa, sinopse);
         this.duracaoMinutos = duracaoMinutos;
         this.diretor = diretor;
     }

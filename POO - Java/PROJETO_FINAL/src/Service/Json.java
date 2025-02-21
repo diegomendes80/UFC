@@ -11,25 +11,27 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Json {
+
 
     String caminhoFilmes = System.getProperty("user.dir") + "/src/Service/todosFilmes.json";
     String caminhoSeries = System.getProperty("user.dir") + "/src/Service/todasSeries.json";
 
     Gson gson = new Gson();
     Type listType = new TypeToken<List<Midia>>() {}.getType(); //avisa pro json que ele sera convertido em um list
-    List<Midia> filmes = JSONtoLIST(caminhoFilmes);
-    List<Midia> series = JSONtoLIST(caminhoSeries);
+     List<Midia> filmes = JSONtoLIST(caminhoFilmes);
+     List<Midia> series = JSONtoLIST(caminhoSeries);
     //List<Object[]> filmesIniciais = J;
 
     public List<Midia> getFilmes() {
-        return filmes;
+        return JSONtoLIST(caminhoFilmes);
     }
 
     public List<Midia> getSeries() {
-        return series;
+        return JSONtoLIST(caminhoSeries);
     }
 
     //carrega os elementos do json na lista java
@@ -168,6 +170,15 @@ public class Json {
         }
     }
 
+
+
+
+
+        public  String gerarCodigoUnico() {
+            // Gera um UUID aleatório e pega os primeiros 10 caracteres numéricos
+            String codigo = UUID.randomUUID().toString().replaceAll("[^0-9]", "").substring(0, 10);
+            return codigo;
+        }
 }
 
 

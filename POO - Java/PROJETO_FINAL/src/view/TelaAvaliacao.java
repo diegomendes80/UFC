@@ -317,9 +317,8 @@ public class TelaAvaliacao extends JPanel{
             panelMidia.add(Box.createHorizontalStrut(30));
             panelMidia.add(rightContainer);
 
-            panelMidia.setBackground(Color.red);
+
             container.add(panelMidia);
-            container.add(Box.createVerticalStrut(10));
             container.add(panelResenha);
 
             return container;
@@ -451,6 +450,8 @@ public class TelaAvaliacao extends JPanel{
                     parentContainer.removeAll(); // Remove todos os componentes do container
                     parentContainer.revalidate(); // Revalida o layout
                     parentContainer.repaint();    // Repaint para atualizar a tela
+                    setResenha(midia, inputName.getText(), textAreaOpniao.getText(), Double.parseDouble(inputNota.getText()), tipo);
+                    adicionaResenhas(midia, tipo, parentContainer);
                 }
 
             });
@@ -465,7 +466,43 @@ public class TelaAvaliacao extends JPanel{
 
         }
 
-    public void adicionaResenhas(Midia midia, String tipo, JPanel panel){
+    public void setResenha(Midia midia, String nome, String resenha, double nota,String tipo){
+        Json json = new Json();
+
+
+        List<Midia> filmes = json.getFilmes();
+        List<Midia> series = json.getSeries();
+
+
+        if (tipo.equals("Filmes")) {
+            for (Midia filme : filmes) {
+                if (filme.getTitulo().equals(midia.getTitulo())) {
+                    if (!filme.getAvaliacoes().isEmpty()) {
+                        for(Avaliacao avaliacao : filme.getAvaliacoes()){
+                            midia.setAvaliacao(avaliacao);
+
+                        }
+                    }
+                }
+            }
+        } else if (tipo.equals("Séries")) {
+            for (Midia serie : series) {
+                if (serie.getTitulo().equals(midia.getTitulo())) {
+                    if (!serie.getAvaliacoes().isEmpty()) {
+                        for(Avaliacao avaliacao : serie.getAvaliacoes()){
+                            midia.setAvaliacao(avaliacao);
+
+                        }
+                    }
+                }
+            }
+        }
+
+        midia.setAvaliacao(new Avaliacao(nome, nota, resenha));
+        json.atualizaMidia(midia, tipo);
+    }
+
+    public void adicionaResenhas(Midia midia, String tipo, Container panel){
         Json json = new Json();
 
         List<Midia> filmes = json.getFilmes();
