@@ -391,17 +391,20 @@ public class telaInicial extends  JPanel {
 
     private void criaPainel(List<JPanel> cards, JPanel panel1, JPanel panel2){
 
-        // Remover os componentes de trás para frente
         for (int i = panel1.getComponentCount() - 1; i >= 0; i--) {
             panel1.remove(i);
+        }
+
+        for (int i = panel2.getComponentCount() - 1; i >= 0; i--) {
             panel2.remove(i);
         }
 
-    // Revalidate e Repaint após a remoção
+// Revalidate e Repaint após a remoção
         panel1.revalidate();
         panel1.repaint();
         panel2.revalidate();
         panel2.repaint();
+
 
 
 

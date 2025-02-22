@@ -78,6 +78,26 @@
         "usuario": "diego",
         "nota": 10.0,
         "resenha": ""
+      },
+      {
+        "usuario": "diego",
+        "nota": 3.0,
+        "resenha": "bom\t"
+      },
+      {
+        "usuario": "diego",
+        "nota": 3.0,
+        "resenha": "bom\t"
+      },
+      {
+        "usuario": "diego",
+        "nota": 10.0,
+        "resenha": ""
+      },
+      {
+        "usuario": "diefgo",
+        "nota": 4.0,
+        "resenha": "s"
       }
     ]
   },
@@ -160,6 +180,16 @@
         "usuario": "diego",
         "nota": 5.0,
         "resenha": "bom"
+      },
+      {
+        "usuario": "diego",
+        "nota": 5.0,
+        "resenha": "bom"
+      },
+      {
+        "usuario": "julio",
+        "nota": 3.0,
+        "resenha": "bom\t"
       }
     ]
   },

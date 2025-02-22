@@ -20,11 +20,17 @@ public class Json {
     String caminhoFilmes = System.getProperty("user.dir") + "/src/Service/todosFilmes.json";
     String caminhoSeries = System.getProperty("user.dir") + "/src/Service/todasSeries.json";
 
+    String caminhoFilmesFavoritos = System.getProperty("user.dir") + "/src/Service/filmesFavoritos.json";
+    String caminhoSeriesFavoritas = System.getProperty("user.dir") + "/src/Service/seriesFavoritas.json";
+
     Gson gson = new Gson();
     Type listType = new TypeToken<List<Midia>>() {}.getType(); //avisa pro json que ele sera convertido em um list
-     List<Midia> filmes = JSONtoLIST(caminhoFilmes);
-     List<Midia> series = JSONtoLIST(caminhoSeries);
-    //List<Object[]> filmesIniciais = J;
+
+
+
+    List<Midia> filmesFavoritos = JSONtoLIST(caminhoFilmesFavoritos);
+    List<Midia> seriesFavorias = JSONtoLIST(caminhoSeriesFavoritas);
+
 
     public List<Midia> getFilmes() {
         return JSONtoLIST(caminhoFilmes);
@@ -68,47 +74,6 @@ public class Json {
         }
     }
 
-   /* private void OBJECTtoJSON(Object[] objects, String caminhoArquivo){
-        Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter(caminhoArquivo)) {
-            gsonPretty.toJson(objects, writer); // Salva a lista no arquivo com formatação
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
-   /* public void salvaMidiasIniciais(Object novoObjeto, String caminhoArquivo) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create(); // Pretty JSON
-        Type listType = new TypeToken<List<Object>>() {}.getType();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(caminhoArquivo))) {
-            List<Object> midias = gson.fromJson(reader, listType);
-
-            if (midias == null) {
-                midias = new ArrayList<>();
-            }
-
-            if (!midias.contains(novoObjeto)) {
-                midias.add(novoObjeto);
-            }
-
-            try (FileWriter writer = new FileWriter(caminhoArquivo)) {
-                gson.toJson(midias, writer); // Salva como Pretty JSON
-            }
-
-        } catch (FileNotFoundException e) {
-            List<Object> midias = new ArrayList<>();
-            midias.add(novoObjeto);
-
-            try (FileWriter writer = new FileWriter(caminhoArquivo)) {
-                gson.toJson(midias, writer); // Salva como Pretty JSON
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
 
 
 
@@ -117,6 +82,8 @@ public class Json {
         AtomicReference<Boolean> jaExiste = new AtomicReference<>(false);
 
         if(tipo.equals("Filmes")){
+
+            List<Midia> filmes = JSONtoLIST(caminhoarquivo);
 
             filmes.forEach(e -> {
                 if(e.getTitulo().equals(midia.getTitulo())) {
@@ -131,6 +98,8 @@ public class Json {
             }
         }
         else if(tipo.equals("Séries")){
+            List<Midia> series = JSONtoLIST(caminhoarquivo);
+
             series.forEach(e -> {
                 if(e.getTitulo().equals(midia.getTitulo())) jaExiste.set(true);
             });
@@ -146,8 +115,38 @@ public class Json {
 
     }
 
-    public void atualizaMidia(Midia midia, String lista){
+    public void removeMidia(Midia midia, String tipo, String caminhoarquivo){
+
+        if(tipo.equals("Filmes")){
+
+            List<Midia> filmes = JSONtoLIST(caminhoarquivo);
+
+            filmes.forEach(e -> {
+                if(e.getTitulo().equals(midia.getTitulo())) {
+                   filmes.remove(e);
+                    LISTtoJSON(filmes, caminhoarquivo);
+                }
+            });
+
+        }
+        else if(tipo.equals("Séries")){
+            List<Midia> series = JSONtoLIST(caminhoarquivo);
+
+            series.forEach(e -> {
+                if(e.getTitulo().equals(midia.getTitulo())) {
+                    series.remove(e);
+                    LISTtoJSON(series, caminhoarquivo);
+                }
+            });
+        }
+
+
+    }
+
+    public void atualizaMidia(Midia midia, String lista, String caminhoarquivo){
         if(lista.equals("Filmes")){
+            List<Midia> filmes = JSONtoLIST(caminhoarquivo);
+
             for (int i = 0; i < filmes.size(); i++) {
                 if (filmes.get(i).getTitulo().equals(midia.getTitulo())) {
                     // Atualiza o objeto na lista
@@ -158,6 +157,8 @@ public class Json {
                 }
             }
         } else if (lista.equals("Séries")) {
+
+            List<Midia> series = JSONtoLIST(caminhoarquivo);
             for (int i = 0; i < series.size(); i++) {
                 if (series.get(i).getTitulo().equals(midia.getTitulo())) {
                     // Atualiza o objeto na lista
