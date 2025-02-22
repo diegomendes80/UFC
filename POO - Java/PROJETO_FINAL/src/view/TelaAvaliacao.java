@@ -331,6 +331,11 @@ public class TelaAvaliacao extends JPanel{
             panelResenha.add(criaPainelAvaliacao(midia, tipo));
         });
 
+        if(isFavorite(midia, tipo)){
+            favButton.setText("Desfavoritar");
+            favButton.setBackground(Color.decode("#F77980"));
+        }
+
         favButton.addActionListener(e -> {
             if(favButton.getText().equals("Favoritar")){
                 favButton.setText("Desfavoritar");
@@ -407,6 +412,27 @@ public class TelaAvaliacao extends JPanel{
             String caminhoSeriesFavoritas = System.getProperty("user.dir") + "/src/Service/seriesFavoritas.json";
             json.removeMidia(midia, tipo, caminhoSeriesFavoritas);
         }
+    }
+
+    public boolean isFavorite(Midia midia, String tipo){
+        Json json = new Json();
+
+        if(tipo.equals("Filmes")){
+            List<Midia> filmesFavoritos  = json.getFilmesFavoritos();
+            for(Midia filme : filmesFavoritos){
+                if(filme.getTitulo().equals(midia.getTitulo())) return true;
+            }
+
+        }
+
+        else if(tipo.equals("Séries")){
+            List<Midia> seriesFavoritas  = json.getSeriesFavorias();
+            for(Midia serie : seriesFavoritas){
+                if(serie.getTitulo().equals(midia.getTitulo())) return true;
+            }
+        }
+
+        return false;
     }
 
 

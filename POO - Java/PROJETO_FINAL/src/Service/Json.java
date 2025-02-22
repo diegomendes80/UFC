@@ -40,6 +40,14 @@ public class Json {
         return JSONtoLIST(caminhoSeries);
     }
 
+    public List<Midia> getFilmesFavoritos() {
+        return filmesFavoritos;
+    }
+
+    public List<Midia> getSeriesFavorias() {
+        return seriesFavorias;
+    }
+
     //carrega os elementos do json na lista java
     private List<Midia> JSONtoLIST(String caminhoArquivo) {
         try (BufferedReader reader = new BufferedReader(new FileReader(caminhoArquivo))) {
