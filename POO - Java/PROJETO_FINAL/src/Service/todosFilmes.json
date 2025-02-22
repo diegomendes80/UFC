@@ -10,6 +10,36 @@
         "usuario": "diego",
         "nota": 4.0,
         "resenha": "bom\t"
+      },
+      {
+        "usuario": "diego",
+        "nota": 4.0,
+        "resenha": "bom\t"
+      },
+      {
+        "usuario": "marcos",
+        "nota": 3.0,
+        "resenha": "bm\t\t\t\t\t"
+      },
+      {
+        "usuario": "diego",
+        "nota": 4.0,
+        "resenha": "bom\t"
+      },
+      {
+        "usuario": "diego",
+        "nota": 4.0,
+        "resenha": "bom\t"
+      },
+      {
+        "usuario": "marcos",
+        "nota": 3.0,
+        "resenha": "bm\t\t\t\t\t"
+      },
+      {
+        "usuario": "diego2",
+        "nota": 2.0,
+        "resenha": "ruim"
       }
     ]
   },
@@ -33,7 +63,23 @@
     "anoLancamento": "2024",
     "urlCapa": "https://image.tmdb.org/t/p/w500/tsVRsCGJ4bZG1xWfQkUgt71ystL.jpg",
     "sinopse": "Fugindo da Europa pós-guerra, um arquiteto visionário chega à América para reconstruir sua vida, carreira e casamento. Sozinho em um novo país estranho, ele se estabelece na Pensilvânia, onde um rico e proeminente industrial reconhece seu talento.",
-    "avaliacoes": []
+    "avaliacoes": [
+      {
+        "usuario": "diego",
+        "nota": 3.0,
+        "resenha": "bom\t"
+      },
+      {
+        "usuario": "diego",
+        "nota": 3.0,
+        "resenha": "bom\t"
+      },
+      {
+        "usuario": "diego",
+        "nota": 10.0,
+        "resenha": ""
+      }
+    ]
   },
   {
     "titulo": "Ainda Estou Aqui",
@@ -104,5 +150,13 @@
         "resenha": "bom"
       }
     ]
+  },
+  {
+    "titulo": "Moana",
+    "genero": "Aventura",
+    "anoLancamento": "2026",
+    "urlCapa": "https://image.tmdb.org/t/p/w500/ys0jZr0quHERDUEoCboGQEKPvgQ.jpg",
+    "sinopse": "Na Polinésia Antiga, quando uma terrível maldição contraída por Maui chega à ilha de um impetuoso chefe, sua filha obstinada responde ao chamado do Oceano para procurar o semideus e consertar as coisas. Adaptação live-action do filme de animação da Disney de 2016 \u0027Moana\u0027",
+    "avaliacoes": []
   }
 ]

@@ -13,11 +13,15 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+    import java.util.ArrayList;
 import java.util.List;
 
 
 public class TelaAvaliacao extends JPanel{
+
+    private JLabel midiaNotaLabel;
+    private Midia midia;
+    private String tipo;
 
     public class BotaoPersonalizado extends JRadioButton {
         //é como se fosse uma classe do css
@@ -154,6 +158,8 @@ public class TelaAvaliacao extends JPanel{
 
 
     public JPanel criaTela(Midia midia, String tipo, String urlCapa, String sinopse){
+        this.midia= midia;
+        this.tipo = tipo;
 
         setSize(1920, 1080);
 
@@ -250,10 +256,10 @@ public class TelaAvaliacao extends JPanel{
             midiaAno.setFont(new Font("Poppins", Font.BOLD, 15));
             midiaAno.setForeground(Color.decode("#B5B6C9"));
 
-            JLabel midiaNota = new JLabel(Double.toString(midia.getMediaNotas()));
-            midiaNota.setBorder(BorderFactory.createEmptyBorder(5, 0, 15, 0));
-            midiaNota.setFont(new Font("Poppins", Font.BOLD, 20));
-            midiaNota.setForeground(Color.decode("#A85FDD"));
+            midiaNotaLabel = new JLabel(Double.toString(midia.getMediaNotas()));
+            midiaNotaLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 15, 0));
+            midiaNotaLabel.setFont(new Font("Poppins", Font.BOLD, 20));
+            midiaNotaLabel.setForeground(Color.decode("#A85FDD"));
 
 
             JLabel midiaSinopse = new JLabel("<html><body style='width:450px;'>" + sinopse + "</body></html>");
@@ -265,7 +271,7 @@ public class TelaAvaliacao extends JPanel{
             midiaInformation.add(midiaTitle);
             midiaInformation.add(midiaGenero);
             midiaInformation.add(midiaAno);
-            midiaInformation.add(midiaNota);
+            midiaInformation.add(midiaNotaLabel);
             midiaInformation.add(midiaSinopse);
 
             JPanel rightContainer = new JPanel();
@@ -445,12 +451,22 @@ public class TelaAvaliacao extends JPanel{
 
             saveButton.addActionListener(e -> {
                // salvarAvaliacao(inputName.getText(), textAreaOpniao.getText(), Double.parseDouble(inputNota.getText()));
+
                 Container parentContainer = cardResenha.getParent();
+                Json json = new Json();
+
                 if (parentContainer != null) {
+                    double nota = Double.parseDouble(inputNota.getText());
+                    if (nota < 0 || nota > 5) {
+                        JOptionPane.showMessageDialog(this, "Nota deve estar entre 0 e 5", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     parentContainer.removeAll(); // Remove todos os componentes do container
                     parentContainer.revalidate(); // Revalida o layout
                     parentContainer.repaint();    // Repaint para atualizar a tela
-                    setResenha(midia, inputName.getText(), textAreaOpniao.getText(), Double.parseDouble(inputNota.getText()), tipo);
+                    setResenha(midia, inputName.getText(), textAreaOpniao.getText(), nota, tipo);
+                    atualizaNota();
+                    json.atualizaMidia(midia, tipo);
                     adicionaResenhas(midia, tipo, parentContainer);
                 }
 
@@ -587,6 +603,10 @@ public class TelaAvaliacao extends JPanel{
         card.add(containerNota, BorderLayout.EAST);
 
         return card;
+    }
+
+    private void atualizaNota() {
+        midiaNotaLabel.setText(Double.toString(midia.getMediaNotas()));
     }
 
 }
