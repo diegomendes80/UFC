@@ -22,6 +22,7 @@ public class TelaAvaliacao extends JPanel{
     private JLabel midiaNotaLabel;
     private Midia midia;
     private String tipo;
+    private boolean isUpdate;
 
     public class BotaoPersonalizado extends JRadioButton {
         //é como se fosse uma classe do css
@@ -160,6 +161,7 @@ public class TelaAvaliacao extends JPanel{
     public JPanel criaTela(Midia midia, String tipo, String urlCapa, String sinopse){
         this.midia= midia;
         this.tipo = tipo;
+        isUpdate = false;
 
         setSize(1920, 1080);
 
@@ -182,7 +184,8 @@ public class TelaAvaliacao extends JPanel{
 
         botaoVoltar.addActionListener(e -> {
 
-            mainFrame.mostrarTelaInicial();
+
+            mainFrame.mostrarTelaInicial(isUpdate);
 
         });
 
@@ -467,6 +470,7 @@ public class TelaAvaliacao extends JPanel{
                     setResenha(midia, inputName.getText(), textAreaOpniao.getText(), nota, tipo);
                     atualizaNota();
                     json.atualizaMidia(midia, tipo);
+                    isUpdate = true;
                     adicionaResenhas(midia, tipo, parentContainer);
                 }
 

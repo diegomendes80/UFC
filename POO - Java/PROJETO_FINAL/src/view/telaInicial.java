@@ -32,8 +32,8 @@ public class telaInicial extends  JPanel {
         filmesIniciais.addAll(List.of("Moana 2", "Interestelar", "O Brutalista", "Ainda estou aqui", "Sonic 3: o filme", "A Substância", "Flow", "Sing - Quem Canta Seus Males Espanta", "Conclave", "Mufasa: O Rei Leão"));
         seriesIniciais.addAll(List.of("Game of Thrones", "Dark", "Ruptura", "A Casa do Dragão", "Lost", "Friends", "Invencível", "Black Mirror", "Stranger Things", "Lupin"));
 
-        cardsFilmes = criaCards("Filmes", filmesIniciais, true);
-        cardsSeries = criaCards("Séries", seriesIniciais, true);
+        cardsFilmes = criaCards("Filmes", filmesIniciais);
+        cardsSeries = criaCards("Séries", seriesIniciais);
 
     }
 
@@ -62,7 +62,7 @@ public class telaInicial extends  JPanel {
 
 
 
-    public JPanel criaTela(){
+    public JPanel criaTela(boolean isUpdate){
 
         setSize(1920, 1080); // Define o tamanho da janela (largura, altura)
         setBackground(Color.decode("#0F0F1A"));
@@ -162,6 +162,11 @@ public class telaInicial extends  JPanel {
         //cria os cards iniciais antes de iniciar o app pra não ter que ficar criando durante a execução
 
 
+        if(isUpdate){
+
+            cardsFilmes = criaCards("Filmes", filmesIniciais );
+            cardsSeries = criaCards("Séries", seriesIniciais);
+        }
 
        //por padrão o botao de filmes começa clicado
         filmeButton.setSelected(true);
@@ -209,7 +214,7 @@ public class telaInicial extends  JPanel {
 
 
 
-    private List<JPanel> criaCards(String tipo, List<String> nomes, boolean isCardInicial){
+    private List<JPanel> criaCards(String tipo, List<String> nomes){
 
 
         API api = new API();
@@ -417,7 +422,7 @@ public class telaInicial extends  JPanel {
         List<String> nomes = new ArrayList<>();
         nomes.add(nomeMidia);
 
-        List<JPanel> cards = criaCards(tipo, nomes, false);
+        List<JPanel> cards = criaCards(tipo, nomes);
         criaPainel(cards, panel1, panel2);
 
 

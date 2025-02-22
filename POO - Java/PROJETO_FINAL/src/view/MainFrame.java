@@ -4,11 +4,15 @@ import model.Midia;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainFrame extends JFrame {
 
+
     private JPanel contentPanel = new JPanel(new BorderLayout());
     telaInicial telaInicial = new telaInicial();
+    private boolean isUpdate;
 
 
     public MainFrame() {
@@ -23,15 +27,15 @@ public class MainFrame extends JFrame {
         add(contentPanel, BorderLayout.CENTER);
 
 
-
-        mostrarTelaInicial();
+        isUpdate=false;
+        mostrarTelaInicial(isUpdate);
 
         setVisible(true);
     }
 
-    public void mostrarTelaInicial() {
+    public void mostrarTelaInicial(boolean isUpdate) {
 
-        JPanel novaTela = telaInicial.criaTela();
+        JPanel novaTela = telaInicial.criaTela(isUpdate);
 
 
         for (int i = contentPanel.getComponentCount() - 1; i >= 0; i--) {
