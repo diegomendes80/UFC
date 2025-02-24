@@ -1,7 +1,6 @@
 package view;
 
 import model.Midia;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,9 +8,11 @@ import java.util.List;
 
 public class MainFrame extends JFrame {
 
+    public static boolean ListaIsUpdate = false;
 
     private JPanel contentPanel = new JPanel(new BorderLayout());
-    telaInicial telaInicial = new telaInicial();
+    telaInicial telaInicial = new telaInicial(this);
+    TelaListas telaListas = new TelaListas(this);
     private boolean isUpdate;
 
 
@@ -74,7 +75,21 @@ public class MainFrame extends JFrame {
     }
 
     public void mostrarTelaListas(){
+        JPanel novaTela = telaListas.criaTela(ListaIsUpdate);
 
+        for (int i = contentPanel.getComponentCount() - 1; i >= 0; i--) {
+            contentPanel.remove(i);
+
+        }
+
+        // Revalidate e Repaint após a remoção
+        contentPanel.revalidate();
+        contentPanel.repaint();
+
+
+        contentPanel.add(novaTela, BorderLayout.CENTER);
+
+        ListaIsUpdate = false;
     }
 
     public static void main(String[] args) {

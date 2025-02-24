@@ -23,9 +23,10 @@ public class telaInicial extends  JPanel {
     List<String> seriesIniciais = new ArrayList<>();
     List<JPanel> cardsFilmes = new ArrayList<>();
     List<JPanel> cardsSeries = new ArrayList<>();
+    MainFrame mainFrame;
 
 
-    public telaInicial(){
+    public telaInicial(MainFrame mainFrame){
 
         //assim que instancia uma tela inicial ele já pega na api os cards iniciais. Isso só é feito uma vez
         //quando o programa inicia, assim não é criado denovo e denovo em execução, poupando assim tempo.
@@ -34,6 +35,8 @@ public class telaInicial extends  JPanel {
 
         cardsFilmes = criaCards("Filmes", filmesIniciais);
         cardsSeries = criaCards("Séries", seriesIniciais);
+
+        this.mainFrame = mainFrame;
 
     }
 
@@ -187,6 +190,8 @@ public class telaInicial extends  JPanel {
                     else if(botao.getText().equals("Séries")){
                         criaPainel(cardsSeries, panelCards1, panelCards2);
 
+                    } else if (botao.getText().equals("Minhas Listas")) {
+                        mainFrame.mostrarTelaListas();
                     }
                     ultimoClicado.set(botao.getText());
                     searchInput.setText("Pesquisar");

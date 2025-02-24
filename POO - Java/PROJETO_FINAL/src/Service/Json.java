@@ -123,32 +123,29 @@ public class Json {
 
     }
 
-    public void removeMidia(Midia midia, String tipo, String caminhoarquivo){
+    public void removeMidia(Midia midia, String tipo, String caminhoarquivo) {
+        if (tipo.equals("Filmes")) {
+            List<Midia> filmes = getFilmesFavoritos();
 
-        if(tipo.equals("Filmes")){
 
-            List<Midia> filmes = JSONtoLIST(caminhoarquivo);
+            filmes.removeIf(e -> e.getTitulo().equals(midia.getTitulo()));
 
-            filmes.forEach(e -> {
-                if(e.getTitulo().equals(midia.getTitulo())) {
-                   filmes.remove(e);
-                    LISTtoJSON(filmes, caminhoarquivo);
-                }
-            });
 
+
+            LISTtoJSON(filmes, caminhoarquivo);
+            this.filmesFavoritos = JSONtoLIST(caminhoFilmesFavoritos);
+            System.out.println(filmesFavoritos);
         }
-        else if(tipo.equals("Séries")){
-            List<Midia> series = JSONtoLIST(caminhoarquivo);
+        else if (tipo.equals("Séries")) {
+            List<Midia> series = getSeriesFavorias();
 
-            series.forEach(e -> {
-                if(e.getTitulo().equals(midia.getTitulo())) {
-                    series.remove(e);
-                    LISTtoJSON(series, caminhoarquivo);
-                }
-            });
+
+            series.removeIf(e -> e.getTitulo().equals(midia.getTitulo()));
+
+
+            LISTtoJSON(series, caminhoarquivo);
+            this.seriesFavorias = JSONtoLIST(caminhoSeriesFavoritas);
         }
-
-
     }
 
     public void atualizaMidia(Midia midia, String lista, String caminhoarquivo){

@@ -117,7 +117,7 @@ public class TelaAvaliacao extends JPanel{
 
     JPanel container = new JPanel();
 
-    // Painel personalizado com imagem de fundo (método de corno)
+
     class BackgroundPanel extends JPanel {
         private ImageIcon backgroundImage;
 
@@ -395,6 +395,10 @@ public class TelaAvaliacao extends JPanel{
             String caminhoSeriesFavoritas = System.getProperty("user.dir") + "/src/Service/seriesFavoritas.json";
             json.salvaMidia(midia, tipo, caminhoSeriesFavoritas);
         }
+
+        MainFrame.ListaIsUpdate = true;
+
+
     }
 
     public void removeFavoritos(Midia midia, String tipo){
@@ -411,7 +415,11 @@ public class TelaAvaliacao extends JPanel{
 
             String caminhoSeriesFavoritas = System.getProperty("user.dir") + "/src/Service/seriesFavoritas.json";
             json.removeMidia(midia, tipo, caminhoSeriesFavoritas);
+
         }
+
+        MainFrame.ListaIsUpdate = true;
+
     }
 
     public boolean isFavorite(Midia midia, String tipo){
