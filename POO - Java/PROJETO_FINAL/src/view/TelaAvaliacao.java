@@ -483,7 +483,7 @@ public class TelaAvaliacao extends JPanel{
             JPanel containerOpniao = new JPanel();
             containerOpniao.setLayout(new BoxLayout(containerOpniao, BoxLayout.Y_AXIS));
             containerOpniao.setBackground(Color.decode("#0F0F1A"));
-            containerOpniao.setMaximumSize(new Dimension(500, 100));
+            containerOpniao.setMaximumSize(new Dimension(600, 100));
 
             containerOpniao.setAlignmentX(Component.CENTER_ALIGNMENT);
 

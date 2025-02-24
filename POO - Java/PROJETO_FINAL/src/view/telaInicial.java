@@ -103,10 +103,11 @@ public class telaInicial extends  JPanel {
 
        //AQUI TERMINA A IMPLEMENTAÇÃO DO HEADER --------------------------------------------------------
 
-        JPanel panelSearch = new JPanel();
-        panelSearch.setLayout(new BoxLayout(panelSearch, BoxLayout.X_AXIS));
-        panelSearch.setBackground(Color.decode("#0F0F1A"));
-        panelSearch.setBorder(BorderFactory.createEmptyBorder(0, 100, 10, 100));
+        JPanel painelPesquisaETitulo = new JPanel();
+        painelPesquisaETitulo.setLayout(new BoxLayout(painelPesquisaETitulo, BoxLayout.X_AXIS));
+        painelPesquisaETitulo.setBorder(BorderFactory.createEmptyBorder(0, 200, 10, 200));
+        painelPesquisaETitulo.setBackground(Color.decode("#0F0F1A"));
+
 
         JLabel searchTitle = new JLabel("Explorar");
         searchTitle.setFont(new Font("Poppins", Font.BOLD, 30));
@@ -143,12 +144,12 @@ public class telaInicial extends  JPanel {
         });
 
 
-        panelSearch.add(searchTitle);
-        panelSearch.add(Box.createHorizontalGlue()); //meio que um elemento que fica no meio gerando um espaçamento estilo space-between
-        panelSearch.add(searchInput);
+        painelPesquisaETitulo.add(searchTitle);
+        painelPesquisaETitulo.add(Box.createHorizontalGlue());
+        painelPesquisaETitulo.add(searchInput);
 
         // Adiciona o search ao container principal
-        container.add(panelSearch);
+        container.add(painelPesquisaETitulo);
 
 
         //AQUI TERMINA A IMPLEMENTAÇÃO DO PAINEL DE PESQUISA -------------------------------------------------
@@ -202,7 +203,10 @@ public class telaInicial extends  JPanel {
 
         //adicionando o evento do campo de busca (TextField)
         searchInput.addActionListener(e -> {
-            criaCardPesquisado(searchInput.getText(), ultimoClicado.get(), panelCards1, panelCards2);
+            String pesquisa = searchInput.getText().trim();
+            if (!pesquisa.isEmpty() && !pesquisa.equals("Pesquisar")) {
+                criaCardPesquisado(pesquisa, ultimoClicado.get(), panelCards1, panelCards2);
+            }
             ultimoClicado.set("");
         });
 
@@ -396,6 +400,8 @@ public class telaInicial extends  JPanel {
 
     private void criaPainel(List<JPanel> cards, JPanel panel1, JPanel panel2){
 
+
+
         for (int i = panel1.getComponentCount() - 1; i >= 0; i--) {
             panel1.remove(i);
         }
@@ -411,8 +417,6 @@ public class telaInicial extends  JPanel {
         panel2.repaint();
 
 
-
-
         for(int i=0; i<cards.size(); i++){
             if(i < 5){
                 panel1.add(cards.get(i));
@@ -421,6 +425,11 @@ public class telaInicial extends  JPanel {
                 panel2.add(cards.get(i));
 
             }
+        }
+
+        //caso o painel 2 não for preenchido ele coloca uma coluna invisivel de 350px só pra o painel 1 não cair
+        if (panel2.getComponentCount() == 0) {
+            panel2.add(Box.createVerticalStrut(350));
         }
     }
 
