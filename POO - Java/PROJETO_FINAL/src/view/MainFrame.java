@@ -17,7 +17,7 @@ public class MainFrame extends JFrame {
 
 
     public MainFrame() {
-        setTitle("App");
+        setTitle("Flick");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

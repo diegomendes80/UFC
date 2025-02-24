@@ -112,41 +112,29 @@
     ]
   },
   {
-    "titulo": "A Substância",
-    "genero": "Terror",
-    "anoLancamento": "2024",
-    "urlCapa": "https://image.tmdb.org/t/p/w500/vWeOgzlhnP1sS23H3rzctGHB9Nb.jpg",
-    "sinopse": "Já sonhou com uma versão melhor de si mesmo? Continuará sendo você, só que melhor em todos os sentidos. Então, você deveria experimentar este novo produto: A Substância. MUDOU A MINHA VIDA.",
-    "avaliacoes": [
-      {
-        "usuario": "d",
-        "nota": 5.0,
-        "resenha": ""
-      }
-    ]
-  },
-  {
-    "titulo": "Flow",
-    "genero": "Animação",
-    "anoLancamento": "2024",
-    "urlCapa": "https://image.tmdb.org/t/p/w500/66Y6qdAmCTtzrtGSPrwHihIZP0W.jpg",
-    "sinopse": "Gato é um animal solitário, mas quando seu lar é destruído por uma grande inundação, ele encontra refúgio em um barco habitado por diversas espécies, tendo que se juntar a elas apesar das diferenças.",
+    "titulo": "Vingadores: Guerra Infinita",
+    "genero": "Aventura",
+    "anoLancamento": "2018",
+    "urlCapa": "https://image.tmdb.org/t/p/w500/d6jUbQj4E4R5MJlFYfdzANEZbkL.jpg",
+    "sinopse": "Homem de Ferro, Thor, Hulk e os Vingadores se unem para combater seu inimigo mais poderoso, o maligno Thanos. Em uma missão para coletar todas as seis pedras infinitas, Thanos planeja usá-las para infligir sua vontade maléfica sobre a realidade.",
     "avaliacoes": []
   },
   {
-    "titulo": "Sing - Quem Canta Seus Males Espanta",
-    "genero": "Animação",
-    "anoLancamento": "2016",
-    "urlCapa": "https://image.tmdb.org/t/p/w500/vMWimvNGXKggoeEHtSAQDTkBikd.jpg",
-    "sinopse": "Um empolgado coala chamado Buster decide criar uma competição de canto para aumentar os rendimentos de seu antigo teatro. A disputa movimenta o mundo animal e promove a revelação de diversos talentos da cidade, todos de olho nos 15 minutos de fama e US$ 100 mil dólares de prêmio.",
-    "avaliacoes": []
-  },
-  {
-    "titulo": "Conclave",
+    "titulo": "Batman: O Cavaleiro das Trevas",
     "genero": "Drama",
-    "anoLancamento": "2024",
-    "urlCapa": "https://image.tmdb.org/t/p/w500/xS5SK7EVPCmsFAOT48rCsJesmkP.jpg",
-    "sinopse": "Após a morte inesperada do atual pontífice, o Cardeal Lawrence é encarregado de conduzir esse processo confidencial. Os líderes mais poderosos da Igreja Católica de todo o mundo se reúnem nos corredores do Vaticano para participar da seleção, cada um com suas próprias ambições. Lawrence se vê no centro de uma conspiração, desvendando segredos que ameaçam não apenas sua fé, mas também as fundações da Igreja.",
+    "anoLancamento": "2008",
+    "urlCapa": "https://image.tmdb.org/t/p/w500/4lj1ikfsSmMZNyfdi8R8Tv5tsgb.jpg",
+    "sinopse": "Após dois anos desde o surgimento do Batman, os criminosos de Gotham City têm muito o que temer. Com a ajuda do tenente James Gordon e do promotor público Harvey Dent, Batman luta contra o crime organizado. Acuados com o combate, os chefes do crime aceitam a proposta feita pelo Coringa e o contratam para combater o Homem-Morcego.",
+    "avaliacoes": []
+  },
+  {
+    "duracaoMinutos": "202 min",
+    "diretor": "Peter Jackson",
+    "titulo": "O Senhor dos Anéis: O Retorno do Rei",
+    "genero": "Aventura",
+    "anoLancamento": "2003",
+    "urlCapa": "https://image.tmdb.org/t/p/w500/egSO4klmc9pnI1CNnHoYKV70XKI.jpg",
+    "sinopse": "O confronto final entre as forças do bem e do mal que lutam pelo controle do futuro da Terra Média se aproxima. Sauron planeja um grande ataque a Minas Tirith, capital de Gondor, o que faz com que Gandalf e Pippin partam para o local na intenção de ajudar a resistência. Um exército é reunido por Theoden em Rohan, em mais uma tentativa de deter as forças de Sauron. Enquanto isso, Frodo, Sam e Gollum seguem sua viagem rumo à Montanha da Perdição para destruir o anel.",
     "avaliacoes": []
   }
 ]

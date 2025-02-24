@@ -54,6 +54,11 @@
         "usuario": "diego",
         "nota": 5.0,
         "resenha": "bom"
+      },
+      {
+        "usuario": "userguest123",
+        "nota": 5.0,
+        "resenha": "Melhor filme da vida! Uma obra prima da ficção executada por Christopher Nolan."
       }
     ]
   },
@@ -210,13 +215,43 @@
     "avaliacoes": []
   },
   {
-    "duracaoMinutos": "125 min",
-    "diretor": "Jeff Fowler",
     "titulo": "Sonic 2: O Filme",
     "genero": "Ação",
     "anoLancamento": "2022",
     "urlCapa": "https://image.tmdb.org/t/p/w500/aT2vdnR3qifI21f7fHTqYW5iAAz.jpg",
     "sinopse": "Depois de se estabelecer em Green Hills, Sonic está pronto para mais liberdade e deixar sua marca como um herói, e Tom e Maddie concordam em deixá-lo em casa enquanto vão de férias. Mas, assim que eles se foram, Dr. Robotnik volta, desta vez com um novo parceiro, Knuckles, em busca de uma esmeralda que tem o poder de construir e destruir civilizações. Sonic se une a um novo companheiro, Tails, e juntos eles embarcam em uma jornada para encontrar a esmeralda antes que ela caia nas mãos erradas.",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "Vingadores: Guerra Infinita",
+    "genero": "Aventura",
+    "anoLancamento": "2018",
+    "urlCapa": "https://image.tmdb.org/t/p/w500/d6jUbQj4E4R5MJlFYfdzANEZbkL.jpg",
+    "sinopse": "Homem de Ferro, Thor, Hulk e os Vingadores se unem para combater seu inimigo mais poderoso, o maligno Thanos. Em uma missão para coletar todas as seis pedras infinitas, Thanos planeja usá-las para infligir sua vontade maléfica sobre a realidade.",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "Batman: O Cavaleiro das Trevas",
+    "genero": "Drama",
+    "anoLancamento": "2008",
+    "urlCapa": "https://image.tmdb.org/t/p/w500/4lj1ikfsSmMZNyfdi8R8Tv5tsgb.jpg",
+    "sinopse": "Após dois anos desde o surgimento do Batman, os criminosos de Gotham City têm muito o que temer. Com a ajuda do tenente James Gordon e do promotor público Harvey Dent, Batman luta contra o crime organizado. Acuados com o combate, os chefes do crime aceitam a proposta feita pelo Coringa e o contratam para combater o Homem-Morcego.",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "O Senhor dos Anéis: A Guerra dos Rohirrim",
+    "genero": "Animação",
+    "anoLancamento": "2024",
+    "urlCapa": "https://image.tmdb.org/t/p/w500/aLOROyUuOum0zztqPiJDCFgFMcw.jpg",
+    "sinopse": "183 anos antes dos eventos narrados na trilogia original, um ataque repentino de Wulf, um inteligente e implacável lorde Dunlending em busca de vingança pela morte de seu pai, força Helm Hammerhand e seu povo a fazer uma ousada última resistência na antiga fortaleza de Hornburg. Encontrando-se em uma situação cada vez mais desesperadora, Héra, a filha de Helm, deve reunir a vontade de liderar a resistência contra um inimigo mortal que pretende destruí-los totalmente.",
+    "avaliacoes": []
+  },
+  {
+    "titulo": "O Senhor dos Anéis: O Retorno do Rei",
+    "genero": "Aventura",
+    "anoLancamento": "2003",
+    "urlCapa": "https://image.tmdb.org/t/p/w500/egSO4klmc9pnI1CNnHoYKV70XKI.jpg",
+    "sinopse": "O confronto final entre as forças do bem e do mal que lutam pelo controle do futuro da Terra Média se aproxima. Sauron planeja um grande ataque a Minas Tirith, capital de Gondor, o que faz com que Gandalf e Pippin partam para o local na intenção de ajudar a resistência. Um exército é reunido por Theoden em Rohan, em mais uma tentativa de deter as forças de Sauron. Enquanto isso, Frodo, Sam e Gollum seguem sua viagem rumo à Montanha da Perdição para destruir o anel.",
     "avaliacoes": []
   }
 ]

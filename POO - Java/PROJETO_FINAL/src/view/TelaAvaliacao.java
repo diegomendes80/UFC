@@ -291,7 +291,7 @@ public class TelaAvaliacao extends JPanel{
         panelResenha.setLayout(new BoxLayout(panelResenha, BoxLayout.Y_AXIS));
         panelResenha.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelResenha.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
-        panelResenha.setMaximumSize(new Dimension(1920, 280));
+        panelResenha.setMaximumSize(new Dimension(1920, 300));
         panelResenha.setBackground(Color.decode("#0F0F1A"));
 
 
@@ -644,7 +644,7 @@ public class TelaAvaliacao extends JPanel{
         List<Midia> filmes = json.getFilmes();
         List<Midia> series = json.getSeries();
 
-        panel.add(Box.createVerticalStrut(150));
+        panel.add(Box.createVerticalStrut(100));
 
         if (tipo.equals("Filmes")) {
             for (Midia filme : filmes) {
