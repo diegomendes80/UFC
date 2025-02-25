@@ -32,14 +32,6 @@
     "avaliacoes": []
   },
   {
-    "titulo": "Ainda Estou Aqui",
-    "genero": "Drama",
-    "anoLancamento": "2024",
-    "urlCapa": "https://image.tmdb.org/t/p/w500/zNAw7jK8bwCK56rIW676pdgkwhd.jpg",
-    "sinopse": "No início da década de 1970, o Brasil enfrenta o endurecimento da ditadura militar. No Rio de Janeiro, a família Paiva – Rubens, Eunice e seus cinco filhos – vive à beira da praia em uma casa de portas abertas para os amigos. Um dia, Rubens Paiva é levado por militares à paisana e desaparece.",
-    "avaliacoes": []
-  },
-  {
     "titulo": "Sonic 3: O Filme",
     "genero": "Ação",
     "anoLancamento": "2024",
@@ -76,5 +68,24 @@
     "urlCapa": "https://image.tmdb.org/t/p/w500/egSO4klmc9pnI1CNnHoYKV70XKI.jpg",
     "sinopse": "O confronto final entre as forças do bem e do mal que lutam pelo controle do futuro da Terra Média se aproxima. Sauron planeja um grande ataque a Minas Tirith, capital de Gondor, o que faz com que Gandalf e Pippin partam para o local na intenção de ajudar a resistência. Um exército é reunido por Theoden em Rohan, em mais uma tentativa de deter as forças de Sauron. Enquanto isso, Frodo, Sam e Gollum seguem sua viagem rumo à Montanha da Perdição para destruir o anel.",
     "avaliacoes": []
+  },
+  {
+    "titulo": "Interestelar",
+    "genero": "Aventura",
+    "anoLancamento": "2014",
+    "urlCapa": "https://image.tmdb.org/t/p/w500/6ricSDD83BClJsFdGB6x7cM0MFQ.jpg",
+    "sinopse": "As reservas naturais da Terra estão chegando ao fim e um grupo de astronautas recebe a missão de verificar possíveis planetas para receberem a população mundial, possibilitando a continuação da espécie. Cooper é chamado para liderar o grupo e aceita a missão sabendo que pode nunca mais ver os filhos. Ao lado de Brand, Jenkins e Doyle, ele seguirá em busca de um novo lar.",
+    "avaliacoes": [
+      {
+        "usuario": "Fernando",
+        "nota": 4.5,
+        "resenha": "Muito bom!"
+      },
+      {
+        "usuario": "Diego",
+        "nota": 4.2,
+        "resenha": "gostei muito"
+      }
+    ]
   }
 ]

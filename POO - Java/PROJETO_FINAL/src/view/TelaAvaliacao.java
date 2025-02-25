@@ -317,6 +317,7 @@ public class TelaAvaliacao extends JPanel{
         avaliaButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
+        //quando botao avaliar é apertado ele exibe o formulário de avaliação
         avaliaButton.addActionListener(e -> {
 
             for (int i = panelResenha.getComponentCount() - 1; i >= 0; i--) {
@@ -384,7 +385,7 @@ public class TelaAvaliacao extends JPanel{
         Json json = new Json();
 
         if(tipo.equals("Filmes")){
-
+            //aqui usa o método da classe json pra salvar a midia em um arquivo, arquivo esse que é o de favoritos
             String caminhoFilmesFavoritos = System.getProperty("user.dir") + "/src/Service/filmesFavoritos.json";
 
             json.salvaMidia(midia, tipo, caminhoFilmesFavoritos);
@@ -396,11 +397,14 @@ public class TelaAvaliacao extends JPanel{
             json.salvaMidia(midia, tipo, caminhoSeriesFavoritas);
         }
 
+        //Como a lista de favoritos foi atualizada, ele altera aquela variável estática do mainframe
+        //que informa justamente isso
         MainFrame.ListaIsUpdate = true;
 
 
     }
 
+    //funcionanmento semelhante ao anterior
     public void removeFavoritos(Midia midia, String tipo){
         Json json = new Json();
 
@@ -422,6 +426,7 @@ public class TelaAvaliacao extends JPanel{
 
     }
 
+    //ve se a mídia esta em alguma lista de favoritos
     public boolean isFavorite(Midia midia, String tipo){
         Json json = new Json();
 
@@ -444,7 +449,7 @@ public class TelaAvaliacao extends JPanel{
     }
 
 
-
+    //função que desenha o formulário
     public JPanel criaPainelAvaliacao(Midia midia, String tipo){
             JPanel cardResenha = new JPanel();
             cardResenha.setLayout(new BoxLayout(cardResenha, BoxLayout.Y_AXIS));
@@ -601,6 +606,7 @@ public class TelaAvaliacao extends JPanel{
 
         }
 
+        //seta uma nova resenha em uma mídia
     public void setResenha(Midia midia, String nome, String resenha, double nota, String tipo) {
         Json json = new Json();
 
@@ -633,10 +639,12 @@ public class TelaAvaliacao extends JPanel{
 
         midia.getAvaliacoes().clear(); // Limpa a lista para evitar duplicação
         for(Avaliacao a : avaliacoes){
-            midia.setAvaliacao(a);
+            midia.setAvaliacao(a); //agora insere tanto a nova qunato as avaliações que já existiam dessa midia nessa
+            //nova "copia" dela
         }
-        //midia.getAvaliacoes().addAll(avaliacoes); // Adiciona todas as avaliações corretamente
 
+
+        //ai aqui atualiza a midia que existia nos arquivos pra essa midia que é a mesma porém com a nova avaliação
         String caminhoArquivo = tipo.equals("Filmes") ? System.getProperty("user.dir") + "/src/Service/todosFilmes.json"
                 : System.getProperty("user.dir") + "/src/Service/todasSeries.json";
 
@@ -644,7 +652,7 @@ public class TelaAvaliacao extends JPanel{
     }
 
 
-
+    //adiciona duas resenhas na tela lá na parte de baixo
     public void adicionaResenhas(Midia midia, String tipo, Container panel){
         Json json = new Json();
 
@@ -732,6 +740,7 @@ public class TelaAvaliacao extends JPanel{
         return card;
     }
 
+    //atualiza a media das notas da midia
     private void atualizaNota() {
         midiaNotaLabel.setText(Double.toString(midia.getMediaNotas()));
     }

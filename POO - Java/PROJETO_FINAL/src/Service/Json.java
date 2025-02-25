@@ -9,7 +9,6 @@ import model.Midia;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
@@ -177,14 +176,6 @@ public class Json {
     }
 
 
-
-
-
-        public  String gerarCodigoUnico() {
-            // Gera um UUID aleatório e pega os primeiros 10 caracteres numéricos
-            String codigo = UUID.randomUUID().toString().replaceAll("[^0-9]", "").substring(0, 10);
-            return codigo;
-        }
 }
 
 

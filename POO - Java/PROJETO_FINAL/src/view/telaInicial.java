@@ -1,6 +1,5 @@
 package view;
 
-import model.Avaliacao;
 import model.Filme;
 import Service.API;
 import Service.Json;
@@ -17,22 +16,28 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 
+//Essa classe será responsável por gerar a primeira tela que o usuario tem acesso no app.
+//Nela serão reunidos 10 cards inciais de filmes e séries que foram escolhidos por mim mesmo
 public class telaInicial extends  JPanel {
 
+    //Defino esses atributos que irão guardar respectivamente: nome dos filmes inciais, nome das séries inciais,
+    //e os cards em si desses filmes e séries
     List<String> filmesIniciais = new ArrayList<>();
     List<String> seriesIniciais = new ArrayList<>();
     List<JPanel> cardsFilmes = new ArrayList<>();
     List<JPanel> cardsSeries = new ArrayList<>();
-    MainFrame mainFrame;
+    MainFrame mainFrame; //instancia de mainframe que será usada para navegar entre telas
 
 
     public telaInicial(MainFrame mainFrame){
 
         //assim que instancia uma tela inicial ele já pega na api os cards iniciais. Isso só é feito uma vez
         //quando o programa inicia, assim não é criado denovo e denovo em execução, poupando assim tempo.
-        filmesIniciais.addAll(List.of("Moana 2", "Interestelar", "O Brutalista", "Ainda estou aqui", "Sonic 3: o filme", "A Substância", "Flow", "Sing - Quem Canta Seus Males Espanta", "Conclave", "Mufasa: O Rei Leão"));
+        filmesIniciais.addAll(List.of("Moana 2", "Interestelar", "O Brutalista", "Ainda estou aqui", "Sonic 3: o filme", "A Substância", "A origem", "Sing Sing", "Conclave", "Mufasa: O Rei Leão"));
         seriesIniciais.addAll(List.of("Game of Thrones", "Dark", "Ruptura", "A Casa do Dragão", "Lost", "Friends", "Invencível", "Black Mirror", "Stranger Things", "Lupin"));
 
+        //cria os cards uma vez durante a incialização do app e só refaz esse processo se houver alguma
+        //atualização em alguma mídia da tela inicial (variável InicioIsUpdate)
         cardsFilmes = criaCards("Filmes", filmesIniciais);
         cardsSeries = criaCards("Séries", seriesIniciais);
 
@@ -40,8 +45,10 @@ public class telaInicial extends  JPanel {
 
     }
 
+    //Meio que reescreve a classe do radioButton pra que eu consiga colocar estilos que não conseguiria
+    //somente com as propriedades padrões.
     public class BotaoPersonalizado extends JRadioButton {
-        //é como se fosse uma classe do css
+
         public BotaoPersonalizado(String texto) {
             super(texto);  // Chama o construtor da classe JButton para definir o texto do botão
 
@@ -61,7 +68,8 @@ public class telaInicial extends  JPanel {
 
     }
 
-        private List<BotaoPersonalizado> listButtonsHeader = new ArrayList<>();
+    //Lista com os botões lá do cabecalho (séries, filmes, minhas listas)
+    private List<BotaoPersonalizado> listButtonsHeader = new ArrayList<>();
 
 
 
@@ -71,7 +79,7 @@ public class telaInicial extends  JPanel {
         setBackground(Color.decode("#0F0F1A"));
         setLayout(new BorderLayout()); // Definir layout principal
 
-        // Painel principal para organizar os componentes
+        // Painel principal para organizar todos componentes de tela inciail
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.setBackground(Color.decode("#0F0F1A"));
@@ -163,9 +171,10 @@ public class telaInicial extends  JPanel {
         panelCards2.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
 
 
-        //cria os cards iniciais antes de iniciar o app pra não ter que ficar criando durante a execução
 
-
+        //Lembra da variável InicioIsUpdate? Aqui que ela é usada de fato. Se ela tiver com valor = false
+        //então serão usados aqueles cards criados no início dessa classe. Senão, é criado os cards novamentes,
+        //agora implmentando as mudanças que foram feitas
         if(isUpdate){
 
             cardsFilmes = criaCards("Filmes", filmesIniciais );
@@ -174,8 +183,13 @@ public class telaInicial extends  JPanel {
 
        //por padrão o botao de filmes começa clicado
         filmeButton.setSelected(true);
+        //chama o método que cria o painel (cada um com 5 cards) da tela inciail
         criaPainel(cardsFilmes, panelCards1, panelCards2);
         clickedButton(filmeButton);
+
+        //aqui eu armazeno numa string o valor do último botão que foi clicado pra não acontecer de eu já está
+        //com aquele botão clicado e ficar chamando a função referente a ele denovo e denovo
+        //está com essa complicação toda pois deu erro quando simplesmente fiz String ultimoClicado = "Filmes"
         AtomicReference<String> ultimoClicado = new AtomicReference<>("Filmes");
 
         //adicionando os eventos dos botões
@@ -185,15 +199,19 @@ public class telaInicial extends  JPanel {
 
                 if (!ultimoClicado.get().equals(botao.getText())) {
                     if(botao.getText().equals("Filmes")){
+                        //se o ultimo botao clicado for filmes ele exibe o painel com 10 filmes
                         criaPainel(cardsFilmes, panelCards1, panelCards2);
 
                     }
                     else if(botao.getText().equals("Séries")){
+                        //caso o botao clicado seja series, ele exibe o painel com 10 series
                         criaPainel(cardsSeries, panelCards1, panelCards2);
 
                     } else if (botao.getText().equals("Minhas Listas")) {
+                        //caso o botão clicado seja minhas litsas, exibe a tela de minhas listas
                         mainFrame.mostrarTelaListas();
                     }
+                    //após as execuções seta o ultimo botao clicado como esse que foi clicado agora
                     ultimoClicado.set(botao.getText());
                     searchInput.setText("Pesquisar");
                 }
@@ -205,6 +223,7 @@ public class telaInicial extends  JPanel {
         searchInput.addActionListener(e -> {
             String pesquisa = searchInput.getText().trim();
             if (!pesquisa.isEmpty() && !pesquisa.equals("Pesquisar")) {
+                //chama a função que cria um card com a mídia que foi pesquisada pelo usuario
                 criaCardPesquisado(pesquisa, ultimoClicado.get(), panelCards1, panelCards2);
             }
             ultimoClicado.set("");
@@ -224,28 +243,31 @@ public class telaInicial extends  JPanel {
 
 
     private List<JPanel> criaCards(String tipo, List<String> nomes){
-
+    //aqui no método criaCards, é passado o tipo de cards e uma série de nomes das mídias que serão criadas
 
         API api = new API();
         Json json = new Json();
 
-        List<JPanel> listCards = new ArrayList<>();
-        List<Object> midiasAPI = new ArrayList<>();
-        List<Midia> listMidias = new ArrayList<>();
-        List<String> nomesFormatados  = new ArrayList<>();
+        List<JPanel> listCards = new ArrayList<>(); //lista de cards gerados
+        List<Object> midiasAPI = new ArrayList<>(); //lista de objetcts que retornam da chamada da API
+        List<Midia> listMidias = new ArrayList<>(); //lista com os objetos Mídias de fato
+        List<String> nomesFormatados  = new ArrayList<>(); //lista com o nome certo das midias, caso digite incorreto
+
 
         for(String nome : nomes){
+            //usado o método buscarTitulo
             String movieORtv = tipo.equals("Filmes") ? "movie" : "tv";
             nomesFormatados.add(API.buscarTitulo(nome, movieORtv));
         }
 
+        //aqui ele cria duas listas colocando como valores o resultado do getter lá da classe Json
+        //faz isso, pois pega todos os filmes que já "existem" no contexto do app
         List<Midia> filmesExistentes = json.getFilmes();
         List<Midia> seriesExistentes = json.getSeries();
-        //{nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners, sinopse}
 
         if(tipo.equals("Filmes")) {
 
-
+            //aqui ele vai adicionando os filmes existentes na lista de midias e vai removendo de nomes formatados
             if (!filmesExistentes.isEmpty()) {
                 for (int i = 0; i < nomesFormatados.size(); i++) {
                     for (int j = 0; j < filmesExistentes.size(); j++) {
@@ -262,7 +284,10 @@ public class telaInicial extends  JPanel {
 
 
             if(!nomesFormatados.isEmpty()){
-            //se entrou aqui quer dizer que o filme ainda não foi colocado na base de dados
+            //se entrou aqui quer dizer que a midia nao "exixstia" ainda então faz o processo de chamá-la na API
+
+                //adiciona em midiasAPI através do método buscarMidia os objects com as informações da midia em questão
+                //buscarMidia retorna isso {nome, anoLancamento, genero, capa, diretor, duracao, numeroTemporadas, showrunners, sinopse}
 
                 for(int i=0; i < nomesFormatados.size(); i++){
                     midiasAPI.add(API.buscarMidia(nomesFormatados.get(i), true));
@@ -270,7 +295,7 @@ public class telaInicial extends  JPanel {
 
                 }
 
-
+                //pega os dados de cada object e cria de um por um instancias de Filme
                 for(int i=0; i < midiasAPI.size(); i++){
                     Object[] dados = (Object[]) midiasAPI.get(i);
                     listMidias.add(new Filme(
@@ -284,7 +309,8 @@ public class telaInicial extends  JPanel {
 
                     ));
 
-
+                    //aqui ele usa o método salvaMidia para adicionar essa midia na lista de todos os filmes
+                    //da base de dados
                     String caminhoArquivo = System.getProperty("user.dir") + "/src/Service/todosFilmes.json";
                     json.salvaMidia(listMidias.get(i), "Filmes", caminhoArquivo);
                 }
@@ -294,7 +320,8 @@ public class telaInicial extends  JPanel {
 
 
             for(int i=0; i < listMidias.size(); i++){
-
+                //finalmente aqui ele usa o método criarCardMidia pra criar os cards propriamente dito
+                //usando a lista de midias
                 listCards.add(api.criarCardMidia(listMidias.get(i)));
 
             }
@@ -319,6 +346,7 @@ public class telaInicial extends  JPanel {
         }
 
 
+        //mesmo funcionamento que para filmes
         else if(tipo.equals("Séries")){
 
 
@@ -399,8 +427,8 @@ public class telaInicial extends  JPanel {
     }
 
     private void criaPainel(List<JPanel> cards, JPanel panel1, JPanel panel2){
-
-
+    //aqui é o método que cria os paineis com os cards
+    //é bem simples, ele só remove primeiro o conteudo dos dois panels e depois adiciona os cards
 
         for (int i = panel1.getComponentCount() - 1; i >= 0; i--) {
             panel1.remove(i);
@@ -434,6 +462,8 @@ public class telaInicial extends  JPanel {
     }
 
     private void criaCardPesquisado(String nomeMidia, String tipo, JPanel panel1, JPanel panel2){
+        //Semelhante ao método anterior, mas aqui ele só cria o painel com um card que é o da
+        //midia pesquisada na barra de pesquisa
         API api = new API();
         Json json = new Json();
         List<String> nomes = new ArrayList<>();
