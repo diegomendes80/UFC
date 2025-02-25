@@ -53,12 +53,12 @@
       {
         "usuario": "diego",
         "nota": 5.0,
-        "resenha": "bom"
+        "resenha": "dsdsds"
       },
       {
-        "usuario": "userguest123",
-        "nota": 5.0,
-        "resenha": "Melhor filme da vida! Uma obra prima da ficção executada por Christopher Nolan."
+        "usuario": "Fernando",
+        "nota": 3.0,
+        "resenha": "teste"
       }
     ]
   },
@@ -148,7 +148,18 @@
     "anoLancamento": "2024",
     "urlCapa": "https://image.tmdb.org/t/p/w500/66Y6qdAmCTtzrtGSPrwHihIZP0W.jpg",
     "sinopse": "Gato é um animal solitário, mas quando seu lar é destruído por uma grande inundação, ele encontra refúgio em um barco habitado por diversas espécies, tendo que se juntar a elas apesar das diferenças.",
-    "avaliacoes": []
+    "avaliacoes": [
+      {
+        "usuario": "diego",
+        "nota": 4.0,
+        "resenha": "dsd"
+      },
+      {
+        "usuario": "jula",
+        "nota": 1.0,
+        "resenha": "sdd"
+      }
+    ]
   },
   {
     "titulo": "Sing - Quem Canta Seus Males Espanta",
@@ -156,7 +167,18 @@
     "anoLancamento": "2016",
     "urlCapa": "https://image.tmdb.org/t/p/w500/vMWimvNGXKggoeEHtSAQDTkBikd.jpg",
     "sinopse": "Um empolgado coala chamado Buster decide criar uma competição de canto para aumentar os rendimentos de seu antigo teatro. A disputa movimenta o mundo animal e promove a revelação de diversos talentos da cidade, todos de olho nos 15 minutos de fama e US$ 100 mil dólares de prêmio.",
-    "avaliacoes": []
+    "avaliacoes": [
+      {
+        "usuario": "diego",
+        "nota": 4.0,
+        "resenha": "dsds"
+      },
+      {
+        "usuario": "marcos",
+        "nota": 2.0,
+        "resenha": "dsds3"
+      }
+    ]
   },
   {
     "titulo": "Conclave",
@@ -164,7 +186,23 @@
     "anoLancamento": "2024",
     "urlCapa": "https://image.tmdb.org/t/p/w500/xS5SK7EVPCmsFAOT48rCsJesmkP.jpg",
     "sinopse": "Após a morte inesperada do atual pontífice, o Cardeal Lawrence é encarregado de conduzir esse processo confidencial. Os líderes mais poderosos da Igreja Católica de todo o mundo se reúnem nos corredores do Vaticano para participar da seleção, cada um com suas próprias ambições. Lawrence se vê no centro de uma conspiração, desvendando segredos que ameaçam não apenas sua fé, mas também as fundações da Igreja.",
-    "avaliacoes": []
+    "avaliacoes": [
+      {
+        "usuario": "diego",
+        "nota": 4.0,
+        "resenha": "sdsdsd"
+      },
+      {
+        "usuario": "diego",
+        "nota": 4.0,
+        "resenha": "sdsdsd"
+      },
+      {
+        "usuario": "fernando",
+        "nota": 2.0,
+        "resenha": "dsds"
+      }
+    ]
   },
   {
     "titulo": "Mufasa: O Rei Leão",
@@ -172,7 +210,23 @@
     "anoLancamento": "2024",
     "urlCapa": "https://image.tmdb.org/t/p/w500/xjj5n62FTqT4jLX8LO0sSyI0MGK.jpg",
     "sinopse": "Mufasa, um filhote órfão, perdido e sozinho, conhece um simpático leão chamado Taka, herdeiro de uma linhagem real. O encontro ao acaso dá início a uma grande jornada de um grupo extraordinário de deslocados em busca de seu destino, além de revelar a ascensão de um dos maiores reis das Terras do Orgulho.",
-    "avaliacoes": []
+    "avaliacoes": [
+      {
+        "usuario": "diego",
+        "nota": 5.0,
+        "resenha": "sdsd"
+      },
+      {
+        "usuario": "diego",
+        "nota": 5.0,
+        "resenha": "sdsd"
+      },
+      {
+        "usuario": "marcos",
+        "nota": 2.0,
+        "resenha": "wsds"
+      }
+    ]
   },
   {
     "titulo": "Tropa de Elite",

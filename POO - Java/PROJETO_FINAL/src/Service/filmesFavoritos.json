@@ -32,64 +32,6 @@
     "avaliacoes": []
   },
   {
-    "titulo": "Interestelar",
-    "genero": "Aventura",
-    "anoLancamento": "2014",
-    "urlCapa": "https://image.tmdb.org/t/p/w500/6ricSDD83BClJsFdGB6x7cM0MFQ.jpg",
-    "sinopse": "As reservas naturais da Terra estão chegando ao fim e um grupo de astronautas recebe a missão de verificar possíveis planetas para receberem a população mundial, possibilitando a continuação da espécie. Cooper é chamado para liderar o grupo e aceita a missão sabendo que pode nunca mais ver os filhos. Ao lado de Brand, Jenkins e Doyle, ele seguirá em busca de um novo lar.",
-    "avaliacoes": [
-      {
-        "usuario": "diego",
-        "nota": 5.0,
-        "resenha": "bom"
-      }
-    ]
-  },
-  {
-    "titulo": "O Brutalista",
-    "genero": "Drama",
-    "anoLancamento": "2024",
-    "urlCapa": "https://image.tmdb.org/t/p/w500/tsVRsCGJ4bZG1xWfQkUgt71ystL.jpg",
-    "sinopse": "Fugindo da Europa pós-guerra, um arquiteto visionário chega à América para reconstruir sua vida, carreira e casamento. Sozinho em um novo país estranho, ele se estabelece na Pensilvânia, onde um rico e proeminente industrial reconhece seu talento.",
-    "avaliacoes": [
-      {
-        "usuario": "diego",
-        "nota": 3.0,
-        "resenha": "bom\t"
-      },
-      {
-        "usuario": "diego",
-        "nota": 3.0,
-        "resenha": "bom\t"
-      },
-      {
-        "usuario": "diego",
-        "nota": 10.0,
-        "resenha": ""
-      },
-      {
-        "usuario": "diego",
-        "nota": 3.0,
-        "resenha": "bom\t"
-      },
-      {
-        "usuario": "diego",
-        "nota": 3.0,
-        "resenha": "bom\t"
-      },
-      {
-        "usuario": "diego",
-        "nota": 10.0,
-        "resenha": ""
-      },
-      {
-        "usuario": "diefgo",
-        "nota": 4.0,
-        "resenha": "s"
-      }
-    ]
-  },
-  {
     "titulo": "Ainda Estou Aqui",
     "genero": "Drama",
     "anoLancamento": "2024",
@@ -128,8 +70,6 @@
     "avaliacoes": []
   },
   {
-    "duracaoMinutos": "202 min",
-    "diretor": "Peter Jackson",
     "titulo": "O Senhor dos Anéis: O Retorno do Rei",
     "genero": "Aventura",
     "anoLancamento": "2003",

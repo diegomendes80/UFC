@@ -569,7 +569,7 @@ public class TelaAvaliacao extends JPanel{
                // salvarAvaliacao(inputName.getText(), textAreaOpniao.getText(), Double.parseDouble(inputNota.getText()));
 
                 Container parentContainer = cardResenha.getParent();
-                Json json = new Json();
+                //Json json = new Json();
 
                 if (parentContainer != null) {
                     double nota = Double.parseDouble(inputNota.getText());
@@ -584,7 +584,7 @@ public class TelaAvaliacao extends JPanel{
                     atualizaNota();
 
                     String caminhoArquivo = tipo.equals("Filmes") ? System.getProperty("user.dir") + "/src/Service/todosFilmes.json" : System.getProperty("user.dir") + "/src/Service/todasSeries.json";
-                    json.atualizaMidia(midia, tipo, caminhoArquivo);
+                    //json.atualizaMidia(midia, tipo, caminhoArquivo);
                     isUpdate = true;
                     adicionaResenhas(midia, tipo, parentContainer);
                 }
@@ -601,42 +601,49 @@ public class TelaAvaliacao extends JPanel{
 
         }
 
-    public void setResenha(Midia midia, String nome, String resenha, double nota,String tipo){
+    public void setResenha(Midia midia, String nome, String resenha, double nota, String tipo) {
         Json json = new Json();
-
 
         List<Midia> filmes = json.getFilmes();
         List<Midia> series = json.getSeries();
 
+        List<Avaliacao> avaliacoes = new ArrayList<>(); // Nova lista de avaliações
 
+        // Encontra a mídia correspondente e copia suas avaliações existentes
         if (tipo.equals("Filmes")) {
             for (Midia filme : filmes) {
                 if (filme.getTitulo().equals(midia.getTitulo())) {
-                    if (!filme.getAvaliacoes().isEmpty()) {
-                        for(Avaliacao avaliacao : filme.getAvaliacoes()){
-                            midia.setAvaliacao(avaliacao);
-
-                        }
-                    }
+                    avaliacoes.addAll(filme.getAvaliacoes()); // Copia avaliações antigas
+                    break;
                 }
             }
         } else if (tipo.equals("Séries")) {
             for (Midia serie : series) {
                 if (serie.getTitulo().equals(midia.getTitulo())) {
-                    if (!serie.getAvaliacoes().isEmpty()) {
-                        for(Avaliacao avaliacao : serie.getAvaliacoes()){
-                            midia.setAvaliacao(avaliacao);
-
-                        }
-                    }
+                    avaliacoes.addAll(serie.getAvaliacoes()); // Copia avaliações antigas
+                    break;
                 }
             }
         }
 
-        midia.setAvaliacao(new Avaliacao(nome, nota, resenha));
-        String caminhoArquivo = tipo.equals("Filmes") ? System.getProperty("user.dir") + "/src/Service/todosFilmes.json" : System.getProperty("user.dir") + "/src/Service/todasSeries.json";
+        // Adiciona a nova avaliação sem duplicar as anteriores
+        avaliacoes.add(new Avaliacao(nome, nota, resenha));
+
+        // Atualiza a mídia com a lista completa
+
+        midia.getAvaliacoes().clear(); // Limpa a lista para evitar duplicação
+        for(Avaliacao a : avaliacoes){
+            midia.setAvaliacao(a);
+        }
+        //midia.getAvaliacoes().addAll(avaliacoes); // Adiciona todas as avaliações corretamente
+
+        String caminhoArquivo = tipo.equals("Filmes") ? System.getProperty("user.dir") + "/src/Service/todosFilmes.json"
+                : System.getProperty("user.dir") + "/src/Service/todasSeries.json";
+
         json.atualizaMidia(midia, tipo, caminhoArquivo);
     }
+
+
 
     public void adicionaResenhas(Midia midia, String tipo, Container panel){
         Json json = new Json();
