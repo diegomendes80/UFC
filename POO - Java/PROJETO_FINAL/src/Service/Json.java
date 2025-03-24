@@ -10,7 +10,6 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Json {
@@ -58,17 +57,6 @@ public class Json {
             throw new RuntimeException(e);
         }
     }
-
-    private Midia[] JSONtoOBJECT(String caminhoArquivo) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(caminhoArquivo))) {
-            return gson.fromJson(reader, Midia[].class); // Converte diretamente para array
-        } catch (FileNotFoundException e) {
-            return new Midia[0];
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
 
     //converte de uma lista pro arquivo json
