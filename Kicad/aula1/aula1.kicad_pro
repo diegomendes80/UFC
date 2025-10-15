@@ -451,7 +451,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "teste.kicad_pro",
+    "filename": "aula1.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -619,7 +619,7 @@
   },
   "sheets": [
     [
-      "29042bab-9cf6-4b2f-9a3d-caedf5c7d7bc",
+      "5d8f0095-2c49-446f-ac29-d1c8c99291cd",
       "Root"
     ]
   ],

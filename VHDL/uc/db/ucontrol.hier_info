@@ -56,13 +56,13 @@ entrada[7] => Mux4.IN128
 entrada[7] => Mux5.IN128
 entrada[7] => Mux6.IN128
 entrada[7] => Mux7.IN256
-saida[0] <= Mux7.DB_MAX_OUTPUT_PORT_TYPE
-saida[1] <= Mux6.DB_MAX_OUTPUT_PORT_TYPE
-saida[2] <= Mux5.DB_MAX_OUTPUT_PORT_TYPE
-saida[3] <= Mux4.DB_MAX_OUTPUT_PORT_TYPE
-saida[4] <= Mux3.DB_MAX_OUTPUT_PORT_TYPE
-saida[5] <= Mux2.DB_MAX_OUTPUT_PORT_TYPE
-saida[6] <= Mux1.DB_MAX_OUTPUT_PORT_TYPE
-saida[7] <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+saida[0] << Mux7.DB_MAX_OUTPUT_PORT_TYPE
+saida[1] << Mux6.DB_MAX_OUTPUT_PORT_TYPE
+saida[2] << Mux5.DB_MAX_OUTPUT_PORT_TYPE
+saida[3] << Mux4.DB_MAX_OUTPUT_PORT_TYPE
+saida[4] << Mux3.DB_MAX_OUTPUT_PORT_TYPE
+saida[5] << Mux2.DB_MAX_OUTPUT_PORT_TYPE
+saida[6] << Mux1.DB_MAX_OUTPUT_PORT_TYPE
+saida[7] << Mux0.DB_MAX_OUTPUT_PORT_TYPE
 
 
